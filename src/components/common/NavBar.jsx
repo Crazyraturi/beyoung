@@ -34,20 +34,312 @@ export default function EcommerceHeader() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
+              {/* TOPWEAR with dropdown - NEW CODE GOES HERE */}
               <div className="relative group">
-                <button className="flex items-center space-x-1 text-black-70">
+                <button className="flex items-center space-x-1 text-black-700 hover:text-gray-900 transition-colors">
                   <span className="text-[14px] font-semibold">TOPWEAR</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
+
+                {/* Dropdown Menu */}
+                <div className="absolute left-0 top-full mt-2 w-[700px] bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200 ">
+                  <div className="grid grid-cols-4 gap-0 p-4">
+                    {/* T-shirts Column */}
+                    <div>
+                      <h3 className="font-bold text-gray-900 mb-3 text-sm">
+                        T-shirts
+                      </h3>
+                      <ul className="space-y-2">
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Plain T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Printed T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Regular Fit T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Oversized T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Polo T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Plus Size T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Full Sleeve T-shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors font-semibold"
+                          >
+                            View All
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Shirts Column */}
+                    <div>
+                      <h3 className="font-bold text-gray-900 mb-3 text-sm">
+                        Shirts
+                      </h3>
+                      <ul className="space-y-2">
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Plain Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Oxford Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Flannel Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Satin Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Festive Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Cotton Shirts
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Shackets
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors font-semibold"
+                          >
+                            View All
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Polos Column */}
+                    <div>
+                      <h3 className="font-bold text-gray-900 mb-3 text-sm">
+                        Polos
+                      </h3>
+                      <ul className="space-y-2">
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors font-semibold"
+                          >
+                            View All
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Shop For Women Column */}
+                    <div>
+                      <h3 className="font-bold text-gray-900 mb-3 text-sm">
+                        Shop For Women
+                      </h3>
+                      <ul className="space-y-2">
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Topwear
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                          >
+                            Bottomwear
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-sm text-gray-600 hover:text-amber-600 transition-colors font-semibold"
+                          >
+                            View All
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
 
+              {/* TOPWEAR with dropdown - NEW CODE GOES HERE */}
               <div className="relative group">
-                <button className="flex items-center space-x-1 text-black-700">
+                <button className="flex items-center space-x-1 text-black-700 hover:text-gray-900 transition-colors">
                   <span className="text-[14px] font-semibold">BOTTOMWEAR</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
+
+                {/* Dropdown Menu */}
+                <div className="absolute left-0 top-full mt-2 w-[150px] bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
+                  <div className="p-4">
+                    <ul className="space-y-2">
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Cargo Joggers
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Cargo Pants
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Trousers
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Japanese Pants
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Gurkha Pants
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Korean Pants
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Pyjamas
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Jeans
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Shorts
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                          Boxers
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
+              {/* Rest of your nav links */}
               <a href="#" className="text-black-700 text-[14px] font-semibold">
                 COMBOS
               </a>
