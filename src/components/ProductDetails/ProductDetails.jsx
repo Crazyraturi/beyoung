@@ -5,6 +5,7 @@ import FreeShipping from "../../assets/FreeShipping.svg";
 import codPincode from "../../assets/codPincode.svg";
 import rewardPoints from "../../assets/pdp-stripes_loyalty.jpg";
 import snapmint from "../../assets/snap_logo_green.svg";
+import offer_pop from "../../assets/offer_pop.svg";
 import RecentlyViewed from "./RecentlyViewed";
 import SimilarProducts from "./SimilarProducts";
 import FeaturesSection from "./FeaturesSection";
@@ -53,7 +54,7 @@ export default function ProductPage() {
                 <div
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
-                  className={`w-20 h-24 border-2 cursor-pointer ${
+                  className={`w-20 h-24 cursor-pointer ${
                     selectedImage === idx ? "border-black" : "border-gray-200"
                   }`}
                 >
@@ -67,14 +68,14 @@ export default function ProductPage() {
             </div>
 
             {/* Main Image */}
-            <div className="flex-1 relative bg-gray-100">
+            <div className="flex-1 h-100 relative bg-gray-100">
               <button className="absolute top-4 right-4 bg-white rounded-full p-2 shadow">
                 <Heart className="w-5 h-5" />
               </button>
               <img
                 src={images[selectedImage]}
                 alt="Product"
-                className="w-full h-auto object-cover"
+                className="w-full h-100 object-cover"
               />
             </div>
           </div>
@@ -85,31 +86,24 @@ export default function ProductPage() {
               Pecan Brown Elbow Patch Sweatshirt
             </h1>
 
-            {/* Rating */}
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <span className="text-sm text-gray-600">2 Votes</span>
+              <span className="text-2xl font-bold">₹ 1,999.00</span>
+              <span className="text-[18px] text-[#A7A7A7] line-through">
+                ₹ 2,999
+              </span>
               <span className="bg-[#FEE53D] text-[#49431A] text-xs px-2 py-1 rounded font-bold">
                 60% OFF
               </span>
             </div>
 
-            {/* Price */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm">Get at ₹1,079</span>
-                <span className="text-2xl font-bold">₹1,999.00</span>
+            <div className="mt-10 mb-10 border-2 border-gray-100">
+              <div className="p-2 border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <img src={offer_pop} className="h-[25px] w-[25px]" />
+                  <span>Get at ₹ 1079</span>
+                </div>
+                <span>FLAT 10% OFF</span>
               </div>
-              <div className="text-sm text-gray-500">(Incl. of all taxes)</div>
-              <a href="#" className="text-blue-600 text-sm underline">
-                Details
-              </a>
             </div>
 
             {/* Color Selection */}
@@ -120,7 +114,7 @@ export default function ProductPage() {
                   <span className="text-[#615F5F]">{`(${selectedColor})`}</span>
                 </label>
                 <a href="#" className="text-sm text-gray-600">
-                  Size Guide ›
+                  Size Guide {">"}
                 </a>
               </div>
               <div className="flex gap-2">
@@ -192,7 +186,7 @@ export default function ProductPage() {
                   onChange={(e) => setPincode(e.target.value)}
                   className="flex-1 px-3 py-2 border rounded-l-xl border-gray-300 focus:outline-none"
                 />
-                <button className="bg-black text-white font-semibold px-6 py-2 rounded-r-xl">
+                <button className="bg-black text-white font-semibold px-6 py-2 rounded-r-xl cursor-pointer">
                   Check
                 </button>
               </div>
