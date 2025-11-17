@@ -8,7 +8,9 @@ const App = () => {
     <BrowserRouter>
       <NavBar />
       <Home />
+      
       <Footer />
+
     </BrowserRouter>
   );
 };
