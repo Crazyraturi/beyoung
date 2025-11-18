@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "../utility";
 import Home from "./pages/Home";
 import NavBar from "./components/common/NavBar";
 import Footer from "./components/common/Footer";
@@ -18,8 +19,8 @@ import Media from "./pages/Media";
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <NavBar />
-
       <Routes>
         {/* Main Pages */}
         <Route path="/" element={<Home />} />
