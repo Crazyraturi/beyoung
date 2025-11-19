@@ -17,6 +17,8 @@ import More from "./pages/More";
 import Media from "./pages/Media";
 import CareersPage from "./pages/Career";
 import PlainTShirt from "./components/topwear/PlainTShirt";
+import ViewAll from "./components/topwear/ViewAll";
+import Winterwear from "./components/winterwear/Winterwear";
 
 const App = () => {
   return (
@@ -38,7 +40,13 @@ const App = () => {
         <Route path="/clothing-stores-near-me" element={<More />} />
         <Route path="/in-the-news" element={<Media />} />
         <Route path="/career" element={<CareersPage />} />
+
+        {/* Topwear dropdrown */}
         <Route path="/men-plain-t-shirts" element={<PlainTShirt />} />
+        <Route path="/t-shirts-for-men" element={<ViewAll />} />
+
+        {/* WinterWear */}
+        <Route path="/men-winterwear" element={<Winterwear />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -107,12 +107,12 @@ export default function EcommerceHeader() {
                           </a>
                         </li>
                         <li>
-                          <a
-                            href="#"
+                          <Link
+                            to="/t-shirts-for-men"
                             className="text-sm text-gray-600 hover:text-gray-900 transition-colors font-semibold"
                           >
                             View All
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>
@@ -348,9 +348,12 @@ export default function EcommerceHeader() {
                 NEW ARRIVALS
               </a>
 
-              <a href="#" className="text-black-700 text-[14px] font-semibold">
+              <Link
+                to="/men-winterwear"
+                className="text-black-700 text-[14px] font-semibold"
+              >
                 WINTERWEAR
-              </a>
+              </Link>
             </nav>
 
             {/* Right Side Actions */}
