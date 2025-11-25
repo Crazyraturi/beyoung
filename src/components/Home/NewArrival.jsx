@@ -117,7 +117,7 @@ const NewArrival = () => {
                   key={product._id}
                   className="bg-white group rounded-xl cursor-pointer"
                 >
-                  <div className="relative w-full overflow-hidden rounded-xl aspect-[3/4]">
+                  <div className="relative w-full overflow-hidden rounded-xl aspect-3/4">
                     {/* Main Image */}
                     <img
                       src={mainImage}
