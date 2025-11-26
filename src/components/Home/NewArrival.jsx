@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 import { Heart, X } from "lucide-react";
 
 const NewArrival = () => {
@@ -12,7 +13,7 @@ const NewArrival = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://beyoung-backend.onrender.com/api/v1/product/products"
+          "https://beyoung-backend.onrender.com/api/product/products"
         );
         const data = await res.json();
         setProducts(data.data);   // Adjust this according to response shape
@@ -73,7 +74,11 @@ const NewArrival = () => {
       <div className="max-w-7xl mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {filteredProducts.map((product, index) => (
-            <div key={index} className="bg-white rounded-lg overflow-hidden">
+            <Link
+              to={`/product-details/${product._id}`}
+              key={product._id}
+              className="bg-white rounded-lg overflow-hidden block"
+            >
               <div className="relative group w-full h-100">
                 {/* Main Image */}
                 <img
@@ -117,7 +122,7 @@ const NewArrival = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

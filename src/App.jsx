@@ -33,7 +33,7 @@ const App = () => {
         {/* ALL ROUTES INSIDE MAINLAYOUT */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/product-details" element={<ProductDetails />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/returns-exchange" element={<ReturnOrder />} />
           <Route path="/terms" element={<TermsandCondition />} />
