@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 import { Heart, X, Loader2 } from "lucide-react";
 
 const NewArrival = () => {
@@ -14,7 +15,7 @@ const NewArrival = () => {
         setLoading(true);
         // Your API Endpoint
         const res = await fetch(
-          "https://beyoung-backend.onrender.com/api/v1/product/products"
+          "https://beyoung-backend.onrender.com/api/product/products"
         );
         const data = await res.json();
 
@@ -87,35 +88,34 @@ const NewArrival = () => {
         {tabButton("polo", "Polo")}
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-10 h-10 animate-spin text-gray-400" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => {
-              // 1. EXTRACT PRICE SAFELY from the first variant
-              const firstVariant =
-                product.variants && product.variants.length > 0
-                  ? product.variants[0]
-                  : {};
-              const priceInfo = firstVariant.price || {};
+      {/* Products Grid */}
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {filteredProducts.map((product, index) => (
+            <Link
+              to={`/product-details/${product._id}`}
+              key={product._id}
+              className="bg-white rounded-lg overflow-hidden block"
+            >
+              <div className="relative group w-full h-100">
+                {/* Main Image */}
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-100 object-cover transition-opacity duration-300 group-hover:opacity-0"
+                />
 
-              // 2. EXTRACT IMAGES SAFELY
-              // Main image is "preview"
-              const mainImage =
-                product.images?.preview || "https://via.placeholder.com/300";
-              // Hover image: try to find "Back View", otherwise take the first gallery image
-              const gallery = product.images?.gallery || [];
-              const hoverImageObj =
-                gallery.find((img) => img.view === "Back View") || gallery[0];
-              const hoverImage = hoverImageObj ? hoverImageObj.file : mainImage;
+                {/* Hover Image */}
+                <img
+                  src={product.hoverImage}
+                  alt="hover"
+                  className="w-full h-100 object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
 
-              return (
-                <div
-                  key={product._id}
-                  className="bg-white group rounded-xl cursor-pointer"
+                {/* Heart Button */}
+                <button
+                  onClick={handleHeartClick}
+                  className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition-colors"
                 >
                   <div className="relative w-full overflow-hidden rounded-xl aspect-3/4">
                     {/* Main Image */}
@@ -173,10 +173,10 @@ const NewArrival = () => {
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Keep your existing Popup code here... */}

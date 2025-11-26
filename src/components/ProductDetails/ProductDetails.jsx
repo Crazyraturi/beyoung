@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 
 import FreeShipping from "../../assets/FreeShipping.svg";
@@ -11,27 +12,40 @@ import SimilarProducts from "./SimilarProducts";
 import FeaturesSection from "./FeaturesSection";
 
 export default function ProductPage() {
+  const { id } = useParams();
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedColor, setSelectedColor] = useState("Pecan Brown");
-  const [selectedSize, setSelectedSize] = useState("L");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [pincode, setPincode] = useState("");
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(
+          `https://beyoung-backend.onrender.com/api/product/${id}`
+        );
+        const data = await res.json();
+        setProduct(data.data);
+        setSelectedColor(data.data?.colors?.[0] || "");
+        setSelectedSize(data.data?.sizes?.[0] || "");
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching product:", error);
+      }
+    };
 
-  const images = [
-    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500",
-    "https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?w=500",
-    "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=500",
-    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500",
-  ];
+    fetchProduct();
+  }, [id]);
 
-  const colors = [
-    { name: "Off White", code: "#F5F5DC" },
-    { name: "Dark Grey", code: "#4A4A4A" },
-    { name: "Pecan Brown", code: "#8B4513" },
-    { name: "Brown", code: "#654321" },
-  ];
+  const images = product?.images || [];
 
-  const sizes = ["S", "M", "L", "XL", "XXL"];
+  const colors = product?.colors || [];
+
+  const sizes = product?.sizes || [];
 
   return (
     <div className="bg-white min-h-screen">
@@ -82,17 +96,15 @@ export default function ProductPage() {
 
           {/* Right: Product Details */}
           <div>
-            <h1 className="text-2xl font-semibold mb-2">
-              Pecan Brown Elbow Patch Sweatshirt
-            </h1>
+            <h1 className="text-2xl font-semibold mb-2">{product?.title}</h1>
 
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl font-bold">₹ 1,999.00</span>
+              <span className="text-2xl font-bold">₹ {product?.price}</span>
               <span className="text-[18px] text-[#A7A7A7] line-through">
-                ₹ 2,999
+                {product?.originalPrice}
               </span>
               <span className="bg-[#FEE53D] text-[#49431A] text-xs px-2 py-1 rounded font-bold">
-                60% OFF
+                {product?.offPercent}% OFF
               </span>
             </div>
 
@@ -163,15 +175,15 @@ export default function ProductPage() {
               <div className="flex gap-2">
                 {colors.map((color) => (
                   <button
-                    key={color.name}
-                    onClick={() => setSelectedColor(color.name)}
+                    key={color}
+                    onClick={() => setSelectedColor(color)}
                     className={`w-10 h-10 rounded-xl border-2 ${
-                      selectedColor === color.name
+                      selectedColor === color
                         ? "border-black"
                         : "border-gray-300"
                     }`}
-                    style={{ backgroundColor: color.code }}
-                    title={color.name}
+                    style={{ backgroundColor: color }}
+                    title={color}
                   />
                 ))}
               </div>
