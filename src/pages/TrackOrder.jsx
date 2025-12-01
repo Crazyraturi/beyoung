@@ -15,11 +15,7 @@ const TrackOrder = () => {
     <section className="w-full">
       {/* Banner Image */}
       <div className="mt-10 mb-6 w-full">
-        <img
-          src={Track_order_Image}
-          alt="Track Order"
-          className="w-full "
-        />
+        <img src={Track_order_Image} alt="Track Order" className="w-full " />
       </div>
 
       {/* Main Section */}

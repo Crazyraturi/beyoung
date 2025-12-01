@@ -1,5 +1,4 @@
-import React from "react";
-import contact_Image from "../assets/contact_Image.png"
+import contact_Image from "../assets/contact_Image.png";
 
 export default function ContactUs() {
   return (
