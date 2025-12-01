@@ -1,11 +1,7 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { Lock, Plus, ChevronRight } from "lucide-react";
+import { useState, useContext } from "react";
+import { Plus } from "lucide-react";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-
-
-
 import AddSecurity from "../assets/AddSecurity.png";
 import Addquality from "../assets/Addquality.png";
 import AddIndia from "../assets/AddIndia.png";
@@ -20,7 +16,6 @@ import AddImg8 from "../assets/AddImg8.png";
 
 export default function AddressPage() {
   const { cartItems } = useContext(CartContext);
-
 
   const totalMRP = cartItems?.reduce(
     (acc, item) => acc + item.price * (item.quantity || 1),
@@ -46,36 +41,35 @@ export default function AddressPage() {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-const navigate = useNavigate();
-const handleContinue = () => {
-  const {
-    firstName,
-    lastName,
-    mobile,
-    pinCode,
-    city,
-    state,
-    address,
-    locality,
-  } = formData;
+  const navigate = useNavigate();
+  const handleContinue = () => {
+    const {
+      firstName,
+      lastName,
+      mobile,
+      pinCode,
+      city,
+      state,
+      address,
+      locality,
+    } = formData;
 
-  if (
-    !firstName ||
-    !lastName ||
-    !mobile ||
-    !pinCode ||
-    !city ||
-    !state ||
-    !address ||
-    !locality
-  ) {
-    alert("⚠️ Please fill all required address fields before continuing.");
-    return;
-  }
+    if (
+      !firstName ||
+      !lastName ||
+      !mobile ||
+      !pinCode ||
+      !city ||
+      !state ||
+      !address ||
+      !locality
+    ) {
+      alert("⚠️ Please fill all required address fields before continuing.");
+      return;
+    }
 
-  navigate("/payment");
-};
-
+    navigate("/payment");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -83,12 +77,11 @@ const handleContinue = () => {
       <div className="bg-white border-b">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-center gap-4">
-           
-              <div className="flex items-center gap-2">
-                <span className="text-green-600">✓</span>
-                <span className="text-sm font-medium text-gray-700">Cart</span>
-              </div>
-           
+            <div className="flex items-center gap-2">
+              <span className="text-green-600">✓</span>
+              <span className="text-sm font-medium text-gray-700">Cart</span>
+            </div>
+
             <div className="w-20 border-t-2 border-dashed border-gray-300"></div>
             <div className="flex items-center gap-2">
               <span className="text-green-600">✓</span>
