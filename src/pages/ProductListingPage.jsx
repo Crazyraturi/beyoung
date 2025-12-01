@@ -8,13 +8,9 @@ import {
   Loader2,
   SlidersHorizontal,
 } from "lucide-react";
-
-// Assuming the correct path to your category data file
 import { CATEGORY_DATA } from "../pages/Detailofmegamenudata/Tshirtdata.js";
 
 const API_BASE_URL = "https://beyoung-backend.onrender.com/api/v1/product";
-
-// === A. HELPER COMPONENTS ===================================================
 
 const PriceTableCard = ({ data }) => {
   if (!data || data.length === 0) return null;
@@ -31,7 +27,6 @@ const PriceTableCard = ({ data }) => {
     day: "numeric",
   };
   const formattedDate = currentDate.toLocaleDateString("en-US", options);
-  console.log(formattedDate);
 
   return (
     <>
