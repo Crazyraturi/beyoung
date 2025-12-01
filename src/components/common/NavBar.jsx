@@ -192,6 +192,15 @@ export default function EcommerceHeader() {
                         <li>
                           <MenuLink
                             filterKey="specificType"
+                            filterValue="Shackets"
+                            className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                          >
+                            Shackets
+                          </MenuLink>
+                        </li>
+                        <li>
+                          <MenuLink
+                            filterKey="specificType"
                             filterValue="Oxford Shirts"
                             className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                           >
@@ -234,15 +243,7 @@ export default function EcommerceHeader() {
                             Cotton Shirts
                           </MenuLink>
                         </li>
-                        <li>
-                          <MenuLink
-                            filterKey="specificType"
-                            filterValue="Shackets"
-                            className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                          >
-                            Shackets
-                          </MenuLink>
-                        </li>
+
                         <li>
                           <MenuLink
                             filterKey="subCategory"
