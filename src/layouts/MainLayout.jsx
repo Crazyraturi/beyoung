@@ -7,11 +7,14 @@ const MainLayout = () => {
 
   const noFooterRoutes = ["/blog/details"];
 
-  const hideFooter = noFooterRoutes.includes(location.pathname);
+  const noHeaderFooterRoutes = ["/login", "/signup"];
+
+  const hideHeader = noHeaderFooterRoutes.includes(location.pathname);
+  const hideFooter = noFooterRoutes.includes(location.pathname) || hideHeader;
 
   return (
     <>
-      <Navbar />
+      {!hideHeader && <Navbar />}
       <Outlet />
       {!hideFooter && <Footer />}
     </>

@@ -2,7 +2,6 @@ import { useEffect, useState, useMemo } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Loader2, X } from "lucide-react";
-
 import BreadcrumbNav from "./BreadcrumbNav";
 import TopButtons from "./TopButtons";
 import FilterSidebar from "./FilterSidebar";
@@ -16,16 +15,41 @@ import { BOTTOMWEAR_DATA } from "./Bottomwear.js";
 
 const API_BASE_URL = "https://beyoung-backend.onrender.com/api/v1/product";
 
+const getNestedValue = (obj, path) => {
+  const keys = path.split(".");
+  let current = obj;
+
+  if (path.startsWith("variants.")) {
+    const variantKey = keys.slice(1).join(".");
+    if (Array.isArray(obj.variants)) {
+      return obj.variants
+        .map((v) => {
+          if (variantKey === "sizes.size" && Array.isArray(v.sizes)) {
+            return v.sizes.map((s) => s.size);
+          }
+          return keys.slice(1).reduce((o, k) => (o || {})[k], v);
+        })
+        .flat();
+    }
+  }
+
+  for (let key of keys) {
+    if (current === null || current === undefined) return undefined;
+    current = current[key];
+  }
+  return current;
+};
+
 export default function ProductListingPage() {
   const [searchParams] = useSearchParams();
   const location = useLocation();
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortOption, setSortOption] = useState("Recommended");
   const [showPopup, setShowPopup] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleHeartClick = () => setShowPopup(true);
   const handleSortChange = (newSort) => setSortOption(newSort);
@@ -46,33 +70,11 @@ export default function ProductListingPage() {
 
   // Logic to determine the content slug (e.g., 'women-topwear' or 'women-clothing-view-all')
   const internalDataSlug = useMemo(() => {
-    const normalize = (str) => str.toLowerCase().replace(/ /g, "-");
-
-    if (specificType) {
-      return normalize(specificType);
-    }
-
-    if (subCategoryQuery) {
-      const normalizedSubCategory = normalize(subCategoryQuery);
-      // Correctly match the two-part slugs from the navigation
-      if (
-        normalizedSubCategory === "women-topwear" ||
-        normalizedSubCategory === "women-bottomwear"
-      ) {
-        return normalizedSubCategory;
-      }
-      // Fallback for men's subcategories (e.g., 't-shirts', 'shirts', 'trousers', 'jeans')
-      return normalizedSubCategory;
-    }
-
-    if (categoryQuery) {
-      // Correctly maps 'category=women' to the view-all slug
-      if (normalize(categoryQuery) === "women") {
-        return "women-clothing-view-all";
-      }
-      return normalize(categoryQuery);
-    }
-    return "t-shirts"; // Default slug (Men's)
+    if (specificType) return specificType.toLowerCase().replace(/ /g, "-");
+    if (subCategoryQuery)
+      return subCategoryQuery.toLowerCase().replace(/ /g, "-");
+    if (categoryQuery) return categoryQuery.toLowerCase().replace(/ /g, "-");
+    return "t-shirts";
   }, [specificType, subCategoryQuery, categoryQuery]);
 
   // 2. --- MERGE TOPWEAR AND BOTTOMWEAR DATA ---
@@ -88,6 +90,10 @@ export default function ProductListingPage() {
   const isContentNotFound = !pageContent;
 
   const finalPriceTableData = pageContent?.price_table_data || {};
+
+  useEffect(() => {
+    setSelectedFilters({});
+  }, [internalDataSlug]);
 
   const fetchFilteredProducts = async () => {
     setLoading(true);
@@ -209,9 +215,7 @@ export default function ProductListingPage() {
       setProducts(response.data.data);
     } catch (err) {
       console.error("Error fetching filtered products:", err);
-      setError(
-        "Failed to fetch products. Check API configuration or URL filters."
-      );
+      setError("Failed to fetch products.");
       setProducts([]);
     } finally {
       setLoading(false);
@@ -226,6 +230,86 @@ export default function ProductListingPage() {
     fetchFilteredProducts();
   }, [searchParams, sortOption, internalDataSlug]);
 
+  const handleFilterChange = (filterId, value) => {
+    setSelectedFilters((prev) => {
+      const current = prev[filterId] || [];
+      if (current.includes(value)) {
+        const updated = current.filter((item) => item !== value);
+        if (updated.length === 0) {
+          const { [filterId]: _, ...rest } = prev;
+          return rest;
+        }
+        return { ...prev, [filterId]: updated };
+      } else {
+        return { ...prev, [filterId]: [...current, value] };
+      }
+    });
+  };
+
+  const filteredProducts = useMemo(() => {
+    if (Object.keys(selectedFilters).length === 0) return products;
+
+    return products.filter((product) => {
+      return Object.entries(selectedFilters).every(
+        ([filterKey, selectedValues]) => {
+          if (!selectedValues.length) return true;
+
+          const productValue = getNestedValue(product, filterKey);
+
+          if (Array.isArray(productValue)) {
+            return productValue.some((val) =>
+              selectedValues.some(
+                (sel) => sel.toLowerCase() === String(val).toLowerCase()
+              )
+            );
+          }
+
+          return selectedValues.some(
+            (sel) => sel.toLowerCase() === String(productValue).toLowerCase()
+          );
+        }
+      );
+    });
+  }, [products, selectedFilters]);
+
+  const filterCounts = useMemo(() => {
+    if (!pageContent?.filters) return {};
+    const counts = {};
+
+    pageContent.filters.forEach((group) => {
+      group.options.forEach((option) => {
+        counts[`${group.id}-${option}`] = 0;
+      });
+    });
+
+    const datasetToCount = products;
+
+    datasetToCount.forEach((product) => {
+      pageContent.filters.forEach((group) => {
+        const productValue = getNestedValue(product, group.id);
+
+        if (Array.isArray(productValue)) {
+          productValue.forEach((val) => {
+            const matchedOption = group.options.find(
+              (opt) => opt.toLowerCase() === String(val).toLowerCase()
+            );
+            if (matchedOption) {
+              counts[`${group.id}-${matchedOption}`]++;
+            }
+          });
+        } else if (productValue) {
+          const matchedOption = group.options.find(
+            (opt) => opt.toLowerCase() === String(productValue).toLowerCase()
+          );
+          if (matchedOption) {
+            counts[`${group.id}-${matchedOption}`]++;
+          }
+        }
+      });
+    });
+    return counts;
+  }, [products, pageContent]);
+
   if (loading) {
     return (
       <div className="p-8 text-center text-xl font-medium">
@@ -238,11 +322,7 @@ export default function ProductListingPage() {
   if (error || isContentNotFound) {
     return (
       <div className="p-8 text-center text-red-600 font-bold border border-red-300 bg-red-50 rounded-lg">
-        🚨
-        {error ||
-          `Content not found for type: "${
-            specificType || subCategoryQuery || categoryQuery || "Default"
-          }".`}
+        🚨 {error || "Content not found."}
       </div>
     );
   }
@@ -265,11 +345,14 @@ export default function ProductListingPage() {
         <hr className="my-2" />
         <TopButtons buttons={pageContent.buttons} />
         <div className="flex gap-6 relative">
-          {/* LEFT SIDEBAR: DYNAMIC FILTERS */}
           <div className="w-1/4 min-w-60 hidden lg:block sticky top-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
-            <FilterSidebar uniqueFilters={pageContent.filters} />
+            <FilterSidebar
+              uniqueFilters={pageContent.filters}
+              selectedFilters={selectedFilters}
+              handleFilterChange={handleFilterChange}
+              filterCounts={filterCounts}
+            />
           </div>
-          {/* RIGHT SIDE: PRODUCT LISTING & DETAILS */}
           <div className="lg:w-3/4 w-full">
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-2 uppercase">{pageTitle}</h2>
@@ -279,7 +362,7 @@ export default function ProductListingPage() {
             </div>
             <div className="flex justify-between items-center py-4 border-t border-b border-gray-200 mb-6">
               <p className="text-gray-600 text-sm">
-                Showing {products.length} Products
+                Showing {filteredProducts.length} Products
               </p>
               <div className="flex items-center space-x-4">
                 <span className="text-sm font-medium text-gray-600">
@@ -291,9 +374,9 @@ export default function ProductListingPage() {
                 />
               </div>
             </div>
-            {products.length > 0 ? (
+            {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <ProductCard
                     key={product._id}
                     product={product}
@@ -315,43 +398,11 @@ export default function ProductListingPage() {
         />
       </div>
 
-      {/* Login Popup (Unchanged) */}
       {showPopup && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4"
           onClick={handleClosePopup}
-        >
-          <div
-            className="bg-white rounded-2xl w-full max-w-sm overflow-hidden relative shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={handleClosePopup}
-              className="absolute top-3 right-3 z-10 bg-white/80 rounded-full p-1 hover:bg-gray-100"
-            >
-              <X className="w-5 h-5 text-gray-600" />
-            </button>
-            <div className="p-8 text-center">
-              <h2 className="text-xl font-bold mb-4">Login to continue</h2>
-              <p className="mb-4 text-gray-600 text-sm">
-                Please enter your phone number to add items to your wishlist.
-              </p>
-              <input
-                className="w-full border p-2 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                type="tel"
-              />
-              <button
-                onClick={handleLogin}
-                className="w-full bg-yellow-400 py-2 rounded font-bold hover:bg-yellow-500 transition-colors"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
+        ></div>
       )}
     </div>
   );
