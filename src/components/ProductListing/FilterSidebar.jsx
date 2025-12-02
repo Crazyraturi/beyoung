@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { SlidersHorizontal, ChevronDown } from "lucide-react";
 
-const FilterSidebar = ({ uniqueFilters }) => {
+const FilterSidebar = ({
+  uniqueFilters,
+  selectedFilters,
+  handleFilterChange,
+  filterCounts,
+}) => {
   const [activeSection, setActiveSection] = useState("Color");
 
   const toggleSection = (id) => {
@@ -19,6 +24,7 @@ const FilterSidebar = ({ uniqueFilters }) => {
         {uniqueFilters.map((filterGroup) => {
           const isColorGroup = filterGroup.label === "Color";
           const isOpen = activeSection === filterGroup.id;
+          const currentSelected = selectedFilters[filterGroup.id] || [];
 
           return (
             <details key={filterGroup.id} className="group" open={isOpen}>
@@ -42,37 +48,45 @@ const FilterSidebar = ({ uniqueFilters }) => {
 
               <div className="max-h-[300px] overflow-y-auto pr-2 mr-1 ml-5 pb-2">
                 <div className="space-y-0">
-                  {filterGroup.options.map((option) => (
-                    <div
-                      key={option}
-                      className="flex items-center justify-between py-3 pr-2 border-b border-gray-100 last:border-0"
-                    >
-                      <label className="flex items-center gap-3 cursor-pointer group/item">
-                        <input
-                          type="checkbox"
-                          name={filterGroup.id}
-                          value={option}
-                          readOnly
-                          className="w-5 h-5 border-2 border-gray-300 rounded text-black focus:ring-0 checked:border-black cursor-pointer transition-colors"
-                        />
+                  {filterGroup.options.map((option) => {
+                    const countKey = `${filterGroup.id}-${option}`;
+                    const count = filterCounts[countKey] || 0;
 
-                        {isColorGroup && (
-                          <span
-                            className="w-5 h-5 rounded-sm border border-gray-200 shadow-sm"
-                            style={{ backgroundColor: option.toLowerCase() }}
+                    return (
+                      <div
+                        key={option}
+                        className="flex items-center justify-between py-3 pr-2 border-b border-gray-100 last:border-0"
+                      >
+                        <label className="flex items-center gap-3 cursor-pointer group/item">
+                          <input
+                            type="checkbox"
+                            name={filterGroup.id}
+                            value={option}
+                            checked={currentSelected.includes(option)}
+                            onChange={() =>
+                              handleFilterChange(filterGroup.id, option)
+                            }
+                            className="w-5 h-5 border-2 border-gray-300 rounded text-black focus:ring-0 checked:border-black cursor-pointer transition-colors"
                           />
-                        )}
 
-                        <span className="text-[15px] text-gray-800 group-hover/item:text-gray-600">
-                          {option}
+                          {isColorGroup && (
+                            <span
+                              className="w-5 h-5 rounded-sm border border-gray-200 shadow-sm"
+                              style={{ backgroundColor: option.toLowerCase() }}
+                            />
+                          )}
+
+                          <span className="text-[15px] text-gray-800 group-hover/item:text-gray-600">
+                            {option}
+                          </span>
+                        </label>
+
+                        <span className="text-sm text-gray-300 font-light">
+                          ({count})
                         </span>
-                      </label>
-
-                      <span className="text-sm text-gray-300 font-light">
-                        ({Math.floor(Math.random() * 30) + 1})
-                      </span>
-                    </div>
-                  ))}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </details>
