@@ -47,6 +47,10 @@ const App = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/verify/:token" element={<Verifyemail />} />
 
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/details" element={<BlogDetailPage />} />
