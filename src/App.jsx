@@ -27,6 +27,11 @@ import PaymentPage from "./pages/PaymentPage";
 
 // 🔥 STEP 1: Import the new component to handle product listings
 import ProductListingPage from "../src/pages/ProductListingPage";
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
+import Verify from "./auth/Verify";
+import Verifyemail from "./auth/VerifyEmail";
+import MyAccount from "./pages/MyAccount";
 // Note: You must ensure this file path is correct.
 
 const App = () => {
@@ -53,6 +58,10 @@ const App = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/> } />
+          <Route path="/verify" element={<Verify/>} />
+          <Route path="/verify/:token" element={<Verifyemail/>} />
 
           {/* BLOG */}
           <Route path="/blog" element={<Blog />} />
@@ -68,6 +77,7 @@ const App = () => {
 
           {/* WINTERWEAR */}
           <Route path="/men-winterwear" element={<Winterwear />} />
+           <Route path="/my-account" element={<MyAccount/>} />
         </Route>
       </Routes>
     </BrowserRouter>
