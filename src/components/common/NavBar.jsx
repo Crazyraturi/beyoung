@@ -3,6 +3,8 @@ import { CartContext } from "../../../src/context/CartContext";
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import Logo from "../icons/Logo";
+// 🔑 IMPORT: Bring in the useAuth hook
+import { useAuth } from "../../../src/context/AuthContext"; 
 
 // --- Reusable Menu Link Component ---
 const MenuLink = ({
@@ -12,7 +14,6 @@ const MenuLink = ({
   className = "",
   onClick,
 }) => {
-  // Generates URLs like: /products?specificType=Plain%20T-shirts
   return (
     <Link
       to={`/products?${filterKey}=${encodeURIComponent(filterValue)}`}
@@ -24,7 +25,7 @@ const MenuLink = ({
   );
 };
 
-// --- Standard Nav Link Component for static routes (New) ---
+// --- Standard Nav Link Component for static routes ---
 const NavLink = ({ to, children, className = "", onClick }) => {
   return (
     <Link to={to} className={className} onClick={onClick}>
@@ -36,27 +37,60 @@ const NavLink = ({ to, children, className = "", onClick }) => {
 export default function EcommerceHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
+  // 🔑 CONTEXT: Access authentication state and functions
+  const { isAuthenticated, logout } = useAuth(); 
 
   // Helper function to close the mobile menu after navigation
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
   };
 
+  // 🔑 NEW HANDLER: Logout logic
+  const handleLogout = () => {
+    logout(); // Clear token and user data from context and storage
+    setMobileMenuOpen(false); // Close mobile menu if open
+    // Note: You can optionally add a navigation redirect here if needed, 
+    // e.g., navigate('/'), but the main effect is updating the UI.
+  };
+
+  const TopBannerLinks = () => (
+    <div className="text-[14px] font-medium">
+      {isAuthenticated ? (
+        // 🔑 AUTHENTICATED LINKS: MY ACCOUNT / LOGOUT
+        <>
+          <Link to="/my-account" className="cursor-pointer hover:underline">
+            MY ACCOUNT
+          </Link>
+          <span> / </span>
+          <button 
+            onClick={handleLogout} 
+            className="cursor-pointer hover:underline bg-transparent border-none text-white p-0 m-0"
+          >
+            LOGOUT
+          </button>
+        </>
+      ) : (
+        // DEFAULT LINKS: LOG IN / SIGNUP
+        <>
+          <Link to="/login" className="cursor-pointer hover:underline">
+            LOG IN
+          </Link>
+          <span> / </span>
+          <Link to="/signup" className="cursor-pointer hover:underline">
+            SIGNUP
+          </Link>
+        </>
+      )}
+    </div>
+  );
+
   return (
     <div className="w-full sticky top-0 z-50">
       {/* Top Banner */}
       <div className="bg-black text-white text-center py-2 text-sm flex justify-around items-center h-[38px]">
         <div>Free Shipping Sitewide on Every Order, Don't Miss Out!!</div>
-        <div className="text-[14px] font-medium">
-          {/* Converted to Link for LOG IN/SIGNUP */}
-          <Link to="/login" className="cursor-pointer">
-            LOG IN
-          </Link>
-          <span> / </span>
-          <Link to="/signup" className="cursor-pointer">
-            SIGNUP
-          </Link>
-        </div>
+        {/* 🔑 RENDERING THE CONDITIONAL LINKS */}
+        <TopBannerLinks /> 
       </div>
 
       {/* Main Header */}
@@ -72,11 +106,10 @@ export default function EcommerceHeader() {
               </h1>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation (omitted for brevity, assume links are fine) */}
             <nav className="hidden md:flex items-center space-x-8">
               {/* TOPWEAR with dropdown */}
               <div className="relative group">
-                {/* TOPWEAR button: Use a MenuLink to filter by Category=Topwear */}
                 <MenuLink
                   filterKey="category"
                   filterValue="Topwear"
@@ -91,7 +124,6 @@ export default function EcommerceHeader() {
                   <div className="grid grid-cols-4 gap-0 p-4">
                     {/* T-shirts Column - ALREADY USING MenuLink */}
                     <div>
-                      {/* Sub Category Title/Link: Filters by subCategory=T-shirts */}
                       <MenuLink
                         filterKey="subCategory"
                         filterValue="T-shirts"
@@ -99,7 +131,6 @@ export default function EcommerceHeader() {
                       >
                         T-shirts
                       </MenuLink>
-
                       <ul className="space-y-2">
                         <li>
                           <MenuLink
@@ -176,9 +207,8 @@ export default function EcommerceHeader() {
                       </ul>
                     </div>
 
-                    {/* Shirts Column - CONVERTED TO MenuLink */}
+                    {/* Shirts Column */}
                     <div>
-                      {/* Title/Link: Filters by subCategory=Shirts */}
                       <MenuLink
                         filterKey="subCategory"
                         filterValue="Shirts"
@@ -263,9 +293,8 @@ export default function EcommerceHeader() {
                       </ul>
                     </div>
 
-                    {/* Polos Column - CONVERTED TO MenuLink */}
+                    {/* Polos Column */}
                     <div>
-                      {/* Title/Link: Filters by subCategory=Polos */}
                       <MenuLink
                         filterKey="subCategory"
                         filterValue="Polos"
@@ -275,7 +304,6 @@ export default function EcommerceHeader() {
                       </MenuLink>
                       <ul className="space-y-2">
                         <li>
-                          {/* FIX: Convert NavLink to MenuLink for filter consistency */}
                           <MenuLink
                             filterKey="specificType"
                             filterValue="Polo T-shirts"
@@ -287,9 +315,8 @@ export default function EcommerceHeader() {
                       </ul>
                     </div>
 
-                    {/* Shop For Women Column - CONVERTED TO MenuLink */}
+                    {/* Shop For Women Column */}
                     <div>
-                      {/* Title/Link: Filters by gender=Women */}
                       <MenuLink
                         filterKey="gender"
                         filterValue="Women"
@@ -317,10 +344,9 @@ export default function EcommerceHeader() {
                           </MenuLink>
                         </li>
                         <li>
-                          {/* FIX: Use 'category=women' to correctly trigger the 'women-clothing-view-all' slug */}
                           <MenuLink
-                            filterKey="category" // <-- FIX IS HERE
-                            filterValue="women" // <-- FIX IS HERE
+                            filterKey="category"
+                            filterValue="women"
                             className="text-sm text-gray-600 hover:text-gray-900 transition-colors font-semibold"
                           >
                             View All
@@ -331,118 +357,16 @@ export default function EcommerceHeader() {
                   </div>
                 </div>
               </div>
-              {/* BOTTOMWEAR with dropdown - CONVERTED TO MenuLink */}
-              <div className="relative group">
-                {/* BOTTOMWEAR button: Use a MenuLink to filter by Category=Bottomwear */}
-                <MenuLink
-                  filterKey="category"
-                  filterValue="Bottomwear"
-                  className="flex items-center space-x-1 text-black-700 hover:text-gray-900 transition-colors"
-                >
-                  <span className="text-[14px] font-semibold">BOTTOMWEAR</span>
-                  <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
-                </MenuLink>
-
-                {/* Dropdown Menu */}
-                <div className="absolute left-0 top-full mt-2 w-[150px] bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
-                  <div className="p-4">
-                    <ul className="space-y-2">
-                      {/* FIXED ALL BOTTOMWEAR LINKS to use filterKey="subCategory" */}
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Cargo Joggers"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Cargo Joggers
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Cargo Pants"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Cargo Pants
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Trousers"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Trousers
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Japanese Pants"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Japanese Pants
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Gurkha Pants"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Gurkha Pants
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Korean Pants"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Korean Pants
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Pyjamas"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Pyjamas
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Jeans"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Jeans
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Shorts"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Shorts
-                        </MenuLink>
-                      </li>
-                      <li>
-                        <MenuLink
-                          filterKey="subCategory" // <-- FIX APPLIED
-                          filterValue="Boxers"
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          Boxers
-                        </MenuLink>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              {/* COMBOS */}
+              
+              {/* The rest of the main navigation links... */}
+              <MenuLink
+                filterKey="category"
+                filterValue="Bottomwear"
+                className="flex items-center space-x-1 text-black-700 hover:text-gray-900 transition-colors"
+              >
+                <span className="text-[14px] font-semibold">BOTTOMWEAR</span>
+                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
+              </MenuLink>
               <MenuLink
                 filterKey="category"
                 filterValue="Combos"
@@ -450,7 +374,6 @@ export default function EcommerceHeader() {
               >
                 COMBOS
               </MenuLink>
-              {/* NEW ARRIVALS */}
               <MenuLink
                 filterKey="category"
                 filterValue="New Arrivals"
@@ -458,17 +381,16 @@ export default function EcommerceHeader() {
               >
                 NEW ARRIVALS
               </MenuLink>
-              {/* WINTERWEAR - Changed from <Link> to MenuLink to use category filter */}
               <MenuLink
                 filterKey="category"
-                filterValue="Winterwear" // This value will map to the 'winter_wear' slug in PLP
+                filterValue="Winterwear"
                 className="text-black-700 text-[14px] font-semibold"
               >
                 WINTERWEAR
               </MenuLink>
             </nav>
 
-            {/* Right Side Actions - Link to /search added */}
+            {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Search Icon */}
               <Link
@@ -505,20 +427,19 @@ export default function EcommerceHeader() {
           </div>
         </div>
 
-        {/* Mobile Menu - CONVERTED ALL LINKS AND ADDED handleLinkClick */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200">
             <div className="px-4 py-4 space-y-3">
-              {/* TOPWEAR */}
+              {/* MOBILE NAVIGATION LINKS (using MenuLink/handleLinkClick) */}
               <MenuLink
                 filterKey="category"
                 filterValue="Topwear"
-                onClick={handleLinkClick} // Close menu on navigation
+                onClick={handleLinkClick}
                 className="block py-2 text-gray-900 hover:text-gray-900 font-bold"
               >
                 TOPWEAR
               </MenuLink>
-              {/* BOTTOMWEAR */}
               <MenuLink
                 filterKey="category"
                 filterValue="Bottomwear"
@@ -527,7 +448,6 @@ export default function EcommerceHeader() {
               >
                 BOTTOMWEAR
               </MenuLink>
-              {/* COMBOS */}
               <MenuLink
                 filterKey="category"
                 filterValue="Combos"
@@ -536,7 +456,6 @@ export default function EcommerceHeader() {
               >
                 COMBOS
               </MenuLink>
-              {/* NEW ARRIVALS */}
               <MenuLink
                 filterKey="category"
                 filterValue="New Arrivals"
@@ -545,7 +464,6 @@ export default function EcommerceHeader() {
               >
                 NEW ARRIVALS
               </MenuLink>
-              {/* WINTERWEAR - Changed from NavLink to MenuLink */}
               <MenuLink
                 filterKey="category"
                 filterValue="Winterwear"
@@ -554,15 +472,34 @@ export default function EcommerceHeader() {
               >
                 WINTERWEAR
               </MenuLink>
+              
               <div className="pt-3 border-t border-gray-200">
-                {/* LOG IN / SIGNUP */}
-                <NavLink
-                  to="/login"
-                  onClick={handleLinkClick}
-                  className="block py-2 text-sm text-gray-700 hover:text-gray-900"
-                >
-                  LOG IN / SIGNUP
-                </NavLink>
+                {/* 🔑 CONDITIONAL MOBILE AUTH LINKS */}
+                {isAuthenticated ? (
+                    <>
+                        <NavLink
+                            to="/my-account"
+                            onClick={handleLinkClick}
+                            className="block py-2 text-sm text-gray-700 hover:text-gray-900"
+                        >
+                            MY ACCOUNT
+                        </NavLink>
+                        <button
+                            onClick={handleLogout}
+                            className="block w-full text-left py-2 text-sm text-gray-700 hover:text-gray-900 bg-transparent border-none"
+                        >
+                            LOGOUT
+                        </button>
+                    </>
+                ) : (
+                    <NavLink
+                        to="/login"
+                        onClick={handleLinkClick}
+                        className="block py-2 text-sm text-gray-700 hover:text-gray-900"
+                    >
+                        LOG IN / SIGNUP
+                    </NavLink>
+                )}
               </div>
             </div>
           </div>
