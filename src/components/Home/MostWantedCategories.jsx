@@ -1,66 +1,77 @@
-import React from 'react';
-import mw1 from  "../../assets/Shirts.png"
-import mw2 from  "../../assets/Trousers.png"
-import mw3 from  "../../assets/Winterwear.png"
-import mw4 from  "../../assets/Cargos.png"
-import mw5 from  "../../assets/Polo.png"
-import mw6 from  "../../assets/Jeans.png"
-import mw7 from  "../../assets/Joggers.png"
-import mw8 from  "../../assets/Oversize.png"
-import mw9 from  "../../assets/imPrinted_Tees.png"
-import mw10 from  "../../assets/Plain_Tees.png"
+import React from "react";
+import mw1 from "../../assets/Shirts.png";
+import mw2 from "../../assets/Trousers.png";
+import mw3 from "../../assets/Winterwear.png";
+import mw4 from "../../assets/Cargos.png";
+import mw5 from "../../assets/Polo.png";
+import mw6 from "../../assets/Jeans.png";
+import mw7 from "../../assets/Joggers.png";
+import mw8 from "../../assets/Oversize.png";
+import mw9 from "../../assets/imPrinted_Tees.png";
+import mw10 from "../../assets/Plain_Tees.png";
+import { Link } from "react-router-dom";
 
 const MostWantedCategories = () => {
   const categories = [
     {
       id: 1,
-      name: 'SHIRTS',
+      name: "SHIRTS",
       image: mw1,
+      route: "/products?specificType=Plain%20Shirts",
     },
     {
       id: 2,
-      name: 'TROUSERS',
+      name: "TROUSERS",
       image: mw2,
+      route: "/products?subCategory=Trousers",
     },
     {
       id: 3,
-      name: 'WINTERWEAR',
+      name: "WINTERWEAR",
       image: mw3,
+      route: "/men-winterwear",
     },
     {
       id: 4,
-      name: 'CARGOS',
+      name: "CARGOS",
       image: mw4,
+      route: "/products?subCategory=Cargo%20Pants",
     },
     {
       id: 5,
-      name: 'POLOS',
+      name: "POLOS",
       image: mw5,
+      route: "/products?specificType=Polo%20T-shirts",
     },
     {
       id: 6,
-      name: 'JEANS',
+      name: "JEANS",
       image: mw6,
+      route: "/products?subCategory=Jeans",
     },
     {
       id: 7,
-      name: 'JOGGERS',
+      name: "JOGGERS",
       image: mw7,
+      route: "/products?subCategory=Cargo%20Joggers",
     },
     {
       id: 8,
-      name: 'OVERSIZED T-SHIRTS',
+      name: "OVERSIZED T-SHIRTS",
       image: mw8,
+      route: "/products?specificType=Oversized%20T-shirts",
     },
     {
       id: 9,
-      name: 'PRINTED T-SHIRTS',
+      name: "PRINTED T-SHIRTS",
       image: mw9,
+      route: "/products?specificType=Printed%20T-shirts",
     },
     {
       id: 10,
-      name: 'PLAIN T-SHIRTS',
+      name: "PLAIN T-SHIRTS",
       image: mw10,
+      route: "/products?specificType=Plain%20T-shirts",
     },
   ];
 
@@ -80,7 +91,8 @@ const MostWantedCategories = () => {
         {/* Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {categories.map((category) => (
-            <div
+            <Link
+              to={`${category.route}`}
               key={category.id}
               className="relative group cursor-pointer overflow-hidden  aspect-square"
             >
@@ -90,10 +102,7 @@ const MostWantedCategories = () => {
                 alt={category.name}
                 className="w-full h-full object-contain   transition-transform duration-300 group-hover:scale-110"
               />
-              
-          
-           
-            </div>
+            </Link>
           ))}
         </div>
       </div>
