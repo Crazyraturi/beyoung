@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Loader2, X } from "lucide-react";
@@ -76,9 +76,8 @@ export default function ProductListingPage() {
       return subCategoryQuery.toLowerCase().replace(/ /g, "-");
     if (categoryQuery) return categoryQuery.toLowerCase().replace(/ /g, "-");
     return "t-shirts";
-  }, [specificType, subCategoryQuery, categoryQuery]); //
+  }, [specificType, subCategoryQuery, categoryQuery]); // 2. --- MERGE TOPWEAR AND BOTTOMWEAR DATA ---
 
-  // 2. --- MERGE TOPWEAR AND BOTTOMWEAR DATA ---
   const pageContent = useMemo(() => {
     const ALL_CATEGORY_DATA = {
       ...TOPWEAR_DATA,
@@ -88,40 +87,33 @@ export default function ProductListingPage() {
       ...NewArrival_DATA,
     };
 
-    const normalizedSlug = internalDataSlug.replace(/-/g, "_");
+    const normalizedSlug = internalDataSlug.replace(/-/g, "_"); // Check for "New Arrivals" specifically, which comes as `category=new arrivals`
 
-    // Check for "New Arrivals" specifically, which comes as `category=new arrivals`
     if (normalizedSlug === "new_arrivals") {
       return ALL_CATEGORY_DATA["new_arrival"];
-    }
+    } // Check for "Winterwear" specifically, which comes as `category=winterwear` or `specificType=winter_wear` (from TopButtons)
 
-    // Check for "Winterwear" specifically, which comes as `category=winterwear` or `specificType=winter_wear` (from TopButtons)
     if (normalizedSlug === "winter_wear" || normalizedSlug === "winterwear") {
       return ALL_CATEGORY_DATA["winter_wear"];
-    }
+    } // 🚨 FIX 1: Map the general 'women' slug (from category=Women in URL) to the specific view-all content key.
 
-    // 🚨 FIX 1: Map the general 'women' slug (from category=Women in URL) to the specific view-all content key.
     if (internalDataSlug === "women") {
-      //
-      return ALL_CATEGORY_DATA["women-clothing-view-all"]; //
-    }
+      return ALL_CATEGORY_DATA["women-clothing-view-all"];
+    } // Use the normalized slug for all other lookups (e.g., 'plain_t-shirts' or 'women-topwear')
 
-    // Use the normalized slug for all other lookups (e.g., 'plain_t-shirts' or 'women-topwear')
     return (
       ALL_CATEGORY_DATA[normalizedSlug] || ALL_CATEGORY_DATA[internalDataSlug]
     );
-  }, [internalDataSlug]); //
-  // ---------------------------------------------
-
+  }, [internalDataSlug]); // ---------------------------------------------
   const isContentNotFound = !pageContent;
 
   const finalPriceTableData = pageContent?.price_table_data || {};
 
   useEffect(() => {
     setSelectedFilters({});
-  }, [internalDataSlug]);
+  }, [internalDataSlug]); // 🚨 FIX: Wrap fetchFilteredProducts in useCallback and list dependencies
 
-  const fetchFilteredProducts = async () => {
+  const fetchFilteredProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -139,18 +131,13 @@ export default function ProductListingPage() {
       categoryQuery?.toLowerCase() === "women"
     ) {
       filterParams.append("gender", "Women");
-      filterParams.append("subCategory", "Shop For Women");
+      filterParams.append("subCategory", "Shop For Women"); // 🚨 FIX 2: Re-add restrictive specificType filter for *specific* Women's pages // to segregate topwear and bottomwear products.
 
-      // 🚨 FIX 2: Re-add restrictive specificType filter for *specific* Women's pages
-      // to segregate topwear and bottomwear products.
       if (internalDataSlug.includes("topwear")) {
         filterParams.append("specificType", "Topwear");
       } else if (internalDataSlug.includes("bottomwear")) {
         filterParams.append("specificType", "Bottomwear");
-      }
-
-      // NOTE: If the slug is just "women" (from categoryQuery), we only apply the gender and subCategory filters,
-      // correctly achieving the *unrestricted* "View All" product list.
+      } // NOTE: If the slug is just "women" (from categoryQuery), we only apply the gender and subCategory filters, // correctly achieving the *unrestricted* "View All" product list.
     } else if (specificType) {
       if (specificType.toLowerCase() === "new_arrival") {
         const fifteenDaysAgo = new Date(
@@ -182,45 +169,36 @@ export default function ProductListingPage() {
         filterParams.append("subCategory", actualSubCategoryValue);
         filterParams.append("specificType", specificType);
       }
-    }
-    // 3. Logic for subCategory queries (Bottomwear specific items)
+    } // 3. Logic for subCategory queries (Bottomwear specific items)
     else if (subCategoryQuery) {
       filterParams.append("subCategory", subCategoryQuery);
-    }
-    // 4. Logic for broad category queries (like category=Bottomwear, category=Combos, category=New Arrivals)
+    } // 4. Logic for broad category queries (like category=Bottomwear, category=Combos, category=New Arrivals)
     else if (categoryQuery) {
       const normalizedCategory = categoryQuery.toLowerCase();
 
       if (normalizedCategory === "bottomwear") {
         filterParams.append("mainCategory", "Bottomwear");
       } else if (
-        normalizedCategory === "combos" ||
-        // 🚨 ADDED LOGIC: Handle "New Arrivals" and "Winterwear" category queries
+        normalizedCategory === "combos" || // 🚨 ADDED LOGIC: Handle "New Arrivals" and "Winterwear" category queries
         normalizedCategory === "new arrivals" ||
         normalizedCategory === "winterwear"
       ) {
         // FIX: Use 'mainCategory' instead of 'category' to align with the product data structure
-        filterParams.append("mainCategory", categoryQuery);
+        filterParams.append("mainCategory", categoryQuery); // 🚨 NEW LOGIC: Apply 15-day filter for main New Arrivals category link // Temporarily set to 30 days to bypass the time zone error
 
-        // 🚨 NEW LOGIC: Apply 15-day filter for main New Arrivals category link
-        // Temporarily set to 30 days to bypass the time zone error
         const thirtyDaysAgo = new Date(
           Date.now() - 30 * 24 * 60 * 60 * 1000
         ).toISOString();
-        filterParams.append("createdAt_gte", thirtyDaysAgo);
-
-        // The restrictive 'subCategory' filter for Winterwear has been removed.
+        filterParams.append("createdAt_gte", thirtyDaysAgo); // The restrictive 'subCategory' filter for Winterwear has been removed.
       } else {
         // Default to Topwear or similar if category is unknown
         filterParams.append("subCategory", "T-shirts");
       }
-    }
-    // 5. Fallback
+    } // 5. Fallback
     else {
       filterParams.append("subCategory", "T-shirts");
-    }
+    } // Append other search params, making sure not to duplicate main filters already set
 
-    // Append other search params, making sure not to duplicate main filters already set
     for (const [key, value] of searchParams.entries()) {
       // Exclude main category filters already determined above
       if (
@@ -233,10 +211,7 @@ export default function ProductListingPage() {
       ) {
         filterParams.append(key, value);
       }
-    }
-    // ------------------------------------------------------------------
-
-    // Sorting Logic (Unchanged)
+    } // ------------------------------------------------------------------ // Sorting Logic (Unchanged)
     if (sortOption && sortOption !== "Recommended") {
       if (sortOption === "price_asc") {
         filterParams.append("sort", "price");
@@ -265,16 +240,24 @@ export default function ProductListingPage() {
       setProducts([]);
     } finally {
       setLoading(false);
-    }
-  };
+    } // Dependencies for useCallback: every variable used inside the function must be listed here.
+  }, [
+    isContentNotFound,
+    internalDataSlug,
+    categoryQuery,
+    specificType,
+    productTypeQuery,
+    sortOption,
+    searchParams,
+  ]);
 
   useEffect(() => {
     setSelectedFilters({});
-  }, [internalDataSlug]);
+  }, [internalDataSlug]); // 🚨 FIX: The useEffect now depends on the stable fetchFilteredProducts function
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [searchParams, sortOption, internalDataSlug]);
+  }, [fetchFilteredProducts]);
 
   const handleFilterChange = (filterId, value) => {
     setSelectedFilters((prev) => {
@@ -374,8 +357,7 @@ export default function ProductListingPage() {
   }
 
   const pageTitle = pageContent.title;
-  const shortDescription = pageContent.description_short;
-  // Inferred category needs to be dynamic for breadcrumb
+  const shortDescription = pageContent.description_short; // Inferred category needs to be dynamic for breadcrumb
   const inferredMainCategory = internalDataSlug.startsWith("women-")
     ? "WOMEN"
     : "MEN";
@@ -443,7 +425,6 @@ export default function ProductListingPage() {
           priceTableData={finalPriceTableData}
         />
       </div>
-
       {showPopup && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4"
