@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+// Removed Card, CardHeader, CardTitle, CardContent, CardFooter imports
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import Logo from "@/components/icons/Logo";
+// Import the logo if available, or just use the text
+// import Logo from "./path/to/Logo"; 
 
 const Signup = () => {
   const [showPassword, setshowPassword] = useState(false);
@@ -35,21 +31,25 @@ const Signup = () => {
   };
 
   const submitHandler = async (e) => {
-  e.preventDefault();
-    // console.log(formData);
+    e.preventDefault();
     // Simple client-side validation check
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-        toast.error("All fields are required.");
-        return;
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password
+    ) {
+      toast.error("All fields are required.");
+      return;
     }
 
     // Basic password strength check (can be enhanced)
     if (formData.password.length < 6) {
-        toast.error("Password must be at least 6 characters long.");
-        return;
+      toast.error("Password must be at least 6 characters long.");
+      return;
     }
     try {
-      setloading(true)
+      setloading(true);
       const res = await axios.post(
         `https://beyoung-backend.onrender.com/api/v1/user/register`,
         formData,
@@ -60,31 +60,65 @@ const Signup = () => {
         }
       );
       if (res.data.success) {
-          toast.success(res.data.message || "Registration successful! Check your email for verification.");
-          navigate("/login?verifyEmail=sent");
+        toast.success(
+          res.data.message || "Registration successful! Check your email for verification."
+        );
+        navigate("/login?verifyEmail=sent");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message
-)
-   
-    }
-    finally{
-      setloading(false)
+      toast.error(error.response.data.message);
+    } finally {
+      setloading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-amber-50">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Enter given details below to create to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-6">
+    // Main container for the split-screen layout
+    <div className="grid lg:grid-cols-2 min-h-screen">
+      {/* 1. Left Section (Yellow Background) */}
+      <div className="flex flex-col justify-between p-10 bg-yellow-400 text-black">
+        <div>
+            <div className="flex items-center space-x-2">
+             <Link to="/" className="text-2xl font-bold">
+              <Logo />
+            </Link>
+          </div>
+        </div>
+         <div className="space-y-6">
+            <h1 className="text-5xl font-extrabold leading-tight">
+              Welcome to  <br />
+              <span className="bg-white px-2 italic text-yellow-500">Future Fashion.</span>
+            </h1>
+            <p className="text-lg font-medium max-w-md opacity-80">
+              Discover the latest trends in streetwear and high fashion, exclusively curated for the bold and the brave.
+            </p>
+          </div>
+        <div className="text-sm">
+          <p>
+            © 2025 Beyoung.in •{" "}
+            <Link to="#" className="hover:underline">
+              Privacy Policy
+            </Link>
+          </p>
+        </div>
+      </div>
+      {/* 2. Right Section (Form/Login) */}
+      <div className="flex flex-col justify-center items-center p-6 bg-white">
+        <div className="w-full max-w-sm p-0">
+          <header className="mb-8 text-center">
+            <h2 className="text-2xl font-bold mb-1">Create your account</h2>
+            {/* Adjusted the 'New to Beyoung' text for the signup page context */}
+            <p className="text-sm text-gray-500">
+              Already have an account?{" "}
+              <Link to="/login" className="text-yellow-500 hover:underline">
+                Login
+              </Link>
+            </p>
+          </header>
+
+          {/* Form Content */}
+          <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="firstName">First Name</Label>
@@ -141,36 +175,52 @@ const Signup = () => {
                 />
                 {showPassword ? (
                   <EyeOff
-                    className="w-5 h-5 text-grey-700 absolute bottom-2 right-5  "
+                    className="w-5 h-5 text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
                     onClick={() => setshowPassword(false)}
                   />
                 ) : (
                   <Eye
                     onClick={() => setshowPassword(true)}
-                    className="w-5 h-5 text-grey-700 absolute bottom-2 right-5  "
+                    className="w-5 h-5 text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
                   />
                 )}
               </div>
             </div>
+
+            {/* Submit Button */}
+            <Button
+              onClick={submitHandler}
+              type="submit"
+              className="w-full mt-4 h-10 bg-yellow-400 hover:bg-yellow-500 text-black text-base font-semibold transition duration-300"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  Signup
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </>
+              )}
+            </Button>
+            
+            {/* Terms and Privacy Policy Footer */}
+            <p className="text-center text-xs text-gray-500 mt-4">
+              By continuing, you agree to Beyoung{" "}
+              <Link to="#" className="hover:underline text-gray-700">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link to="#" className="hover:underline text-gray-700">
+                Privacy Policy
+              </Link>
+            </p>
           </div>
-        </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button
-            onClick={submitHandler}
-            type="submit"
-            className="w-full cursor-pointer bg-amber-300 hover:bg-amber-400 ">
-            {loading?<><Loader2 className="h-4 w-4 animate-spin mr-2"/>please wait</>:"Signup"} 
-          </Button>
-          <p className="text-grey-600 text-sm">
-            Already Have an account ?{" "}
-            <Link
-              to={"/login"}
-              className=" hover:underline curser-pointer text-yellow-500">
-              Login
-            </Link>{" "}
-          </p>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
