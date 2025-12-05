@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Cart from "../assets/Cart.jpg";
+import Cart from "../assets/Add to Cart-cuate.svg";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../src/context/CartContext";
 import { Check, Trash2, Heart, Tag, ChevronRight } from "lucide-react";
