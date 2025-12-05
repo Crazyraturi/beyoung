@@ -15,7 +15,9 @@ const MainLayout = () => {
   return (
     <>
       {!hideHeader && <Navbar />}
-      <Outlet />
+    <div className="content-area">
+        <Outlet />
+      </div>
       {!hideFooter && <Footer />}
     </>
   );

@@ -59,7 +59,7 @@ const MyAccount = () => {
       condition: "10% off on min shopping of ₹2499",
     },
     {
-      code: "BEYOUNG50",
+      code: " Elegante50",
       description: "Save ₹50 on this order!",
       condition: "₹50 off on orders above ₹999",
     },
@@ -73,7 +73,7 @@ const MyAccount = () => {
       price: "₹998",
       oldPrice: "₹1798",
       discount: "55% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764573435/beyoung_products/blftomf1y3lrcyep9ctb.jpg",
     },
     {
       id: 2,
@@ -82,7 +82,7 @@ const MyAccount = () => {
       price: "₹1199",
       oldPrice: "₹2999",
       discount: "60% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764569169/beyoung_products/upwoewbgxlstodj6goeq.jpg",
     },
     {
       id: 3,
@@ -91,7 +91,7 @@ const MyAccount = () => {
       price: "₹1499",
       oldPrice: "₹3799",
       discount: "68% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764509580/beyoung_products/wgwo727yp8ul6qkh5pdf.jpg",
     },
   ];
 
@@ -297,8 +297,8 @@ const MyAccount = () => {
                 <div
                   key={idx}
                   className="border border-gray-300 rounded-lg p-4 flex items-center gap-4">
-                  <div className="bg-yellow-400 text-black font-bold px-3 py-8 rounded transform -rotate-90 origin-center whitespace-nowrap text-sm">
-                    BEYOUNG
+                  <div className="bg-yellow-400 text-black font-bold px-3 py-8 rounded  transform -rotate-90 origin-center whitespace-nowrap text-sm">
+                     Elegante
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-lg mb-1">{coupon.code}</h3>

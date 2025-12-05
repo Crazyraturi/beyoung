@@ -5,6 +5,30 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import Logo from "@/components/icons/Logo";
+import React, { useState, useEffect, createContext, useContext } from "react";
+import {
+  Eye,
+  EyeOff,
+  ShoppingBag,
+  ArrowRight,
+  Mail,
+  Lock,
+  Loader2,
+} from "lucide-react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import axios from "axios";
+import { Toaster, toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
+
+import Logo from "@/components/icons/Logo";
+import Loader from "@/components/common/Loder";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -54,7 +78,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `https://beyoung-backend.onrender.com/api/v1/user/login`,
+        `https://beyoung-.onrender.com/api/v1/user/login`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -91,6 +115,7 @@ const Login = () => {
           animate ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
         }`}
       >
+        }`}>
         {/* Abstract Pattern */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +160,7 @@ const Login = () => {
           </div>
 
           <div className="flex items-center space-x-4 text-sm font-semibold">
-            <span>© 2025 Beyoung.in</span>
+            <span>© 2025 Elegante.in</span>
             <span className="w-1 h-1 bg-gray-900 rounded-full"></span>
             <Link to="/privacy" className="hover:underline">
               Privacy Policy
@@ -164,16 +189,16 @@ const Login = () => {
             animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
+          }`}>
           <div className="text-center lg:text-left">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">
               Login to your account
             </h2>
             <p className="mt-2 text-sm text-gray-500">
-              New to Beyoung ?
+              New to Elegante ?
               <Link
                 to="/signup"
-                className="ml-1 font-semibold text-yellow-500 hover:text-yellow-600 transition-colors focus:outline-none focus:underline"
-              >
+                className="ml-1 font-semibold text-yellow-500 hover:text-yellow-600 transition-colors focus:outline-none focus:underline">
                 Create an account
               </Link>
             </p>
@@ -214,8 +239,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none p-1"
-                >
+                  className="text-gray-400 hover:text-gray-600 focus:outline-none p-1">
                   {showPassword ? (
                     <EyeOff className="h-5 w-5" />
                   ) : (
@@ -228,8 +252,7 @@ const Login = () => {
             <div className="flex items-center justify-end">
               <Link
                 to="/forgot-password"
-                className="text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors"
-              >
+                className="text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors">
                 Forgot your password?
               </Link>
             </div>
@@ -237,8 +260,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200 shadow-lg shadow-yellow-200 hover:shadow-yellow-300 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200 shadow-lg shadow-yellow-200 hover:shadow-yellow-300 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed">
               {loading ? (
                 <div className="flex items-center">
                   <Loader2 className="h-5 w-5 animate-spin mr-2 text-gray-800" />
@@ -249,7 +271,7 @@ const Login = () => {
                   <span className="absolute right-5 inset-y-0 flex items-center pl-3">
                     <ArrowRight className="h-5 w-5 text-gray-800 group-hover:translate-x-1 transition-transform" />
                   </span>
-                  Sign in
+                  Login in
                 </>
               )}
             </button>
@@ -257,7 +279,7 @@ const Login = () => {
 
           <div className="mt-6">
             <p className="text-center text-xs text-gray-400">
-              By continuing, you agree to Beyoung{" "}
+              By continuing, you agree to Elegante{" "}
               <Link to="/terms" className="underline hover:text-gray-600">
                 Terms of Service
               </Link>{" "}
