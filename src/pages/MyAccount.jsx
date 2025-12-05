@@ -73,7 +73,7 @@ const MyAccount = () => {
       price: "₹998",
       oldPrice: "₹1798",
       discount: "55% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764573435/beyoung_products/blftomf1y3lrcyep9ctb.jpg",
     },
     {
       id: 2,
@@ -82,7 +82,7 @@ const MyAccount = () => {
       price: "₹1199",
       oldPrice: "₹2999",
       discount: "60% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764569169/beyoung_products/upwoewbgxlstodj6goeq.jpg",
     },
     {
       id: 3,
@@ -91,7 +91,7 @@ const MyAccount = () => {
       price: "₹1499",
       oldPrice: "₹3799",
       discount: "68% off",
-      image: "/api/placeholder/120/150",
+      image: "https://res.cloudinary.com/dj9tpadhk/image/upload/v1764509580/beyoung_products/wgwo727yp8ul6qkh5pdf.jpg",
     },
   ];
 

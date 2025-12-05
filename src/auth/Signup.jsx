@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import Logo from "@/components/icons/Logo";
+import Loader from "@/components/common/Loder";
 // Import the logo if available, or just use the text
 // import Logo from "./path/to/Logo"; 
 

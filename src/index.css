@@ -135,3 +135,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.content-area{
+  min-height: 500px;
+ 
+}

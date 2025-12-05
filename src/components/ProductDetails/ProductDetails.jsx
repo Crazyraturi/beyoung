@@ -17,6 +17,7 @@ import PDI from "../../assets/PDI.svg";
 import Reward from "../../assets/Reward.jpg";
 import RecentlyViewed from "../Home/RecentlyViewed";
 import FeaturesSection from "../ProductDetails/FeaturesSection";
+import Loader from "../common/Loder";
 
 const StarIcon = (props) => (
   <svg
@@ -278,7 +279,7 @@ export default function ProductPage() {
   if (loading)
     return (
       <div className="h-screen flex justify-center items-center">
-        Loading...
+     <Loader />
       </div>
     );
 

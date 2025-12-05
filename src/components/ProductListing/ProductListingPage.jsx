@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
-import { Loader2, X } from "lucide-react";
+import {  X } from "lucide-react";
 import BreadcrumbNav from "./BreadcrumbNav";
 import TopButtons from "./TopButtons";
 import FilterSidebar from "./FilterSidebar";
@@ -13,6 +13,7 @@ import { BOTTOMWEAR_DATA } from "./Bottomwear.js";
 import { Combos_DATA } from "./Combos.js";
 import { WinterWear_DATA } from "./WinterWear.js";
 import { NewArrival_DATA } from "./NewArrival.js";
+import Loader from "../common/Loder";
 
 const API_BASE_URL = "https://beyoung-backend.onrender.com/api/v1/product";
 
@@ -359,8 +360,8 @@ export default function ProductListingPage() {
   if (loading) {
     return (
       <div className="p-8 text-center text-xl font-medium">
-        <Loader2 className="w-8 h-8 mx-auto animate-spin text-gray-500 mb-4" />
-        Loading products...
+      <Loader />
+        
       </div>
     );
   }

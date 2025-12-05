@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, X, Loader2 } from "lucide-react";
+import Loader from "../common/Loder";
 
 const RecentlyViewed= () => {
   const [activeTab, setActiveTab] = useState("viewAll");
@@ -76,7 +77,7 @@ const RecentlyViewed= () => {
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Loader2 className="w-10 h-10 animate-spin text-gray-400" />
+      <Loader />
         </div>
       ) : (
         <div className="max-w-7xl mx-auto p-6">

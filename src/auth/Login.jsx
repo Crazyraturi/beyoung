@@ -6,6 +6,7 @@ import { Toaster, toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 
   import Logo from '@/components/icons/Logo';
+import Loader from '@/components/common/Loder';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -225,7 +226,7 @@ const Login = () => {
                   <span className="absolute right-5 inset-y-0 flex items-center pl-3">
                     <ArrowRight className="h-5 w-5 text-gray-800 group-hover:translate-x-1 transition-transform" />
                   </span>
-                  Sign in
+                  Login in
                 </>
               )}
             </button>
