@@ -55,7 +55,7 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        `https://beyoung-.onrender.com/api/v1/user/login`,
+        `https://beyoung-backend.onrender.com/api/v1/user/login`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
