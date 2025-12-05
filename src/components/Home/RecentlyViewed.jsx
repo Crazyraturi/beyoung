@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, X } from "lucide-react";
-import Loader from "../common/Loder";
+import Loader from "../common/Loader";
 
 const RecentlyViewed = () => {
   const [activeTab, setActiveTab] = useState("viewAll");

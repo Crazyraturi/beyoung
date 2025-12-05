@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Heart, X, Loader2 } from "lucide-react";
-import Loader from "../common/Loder";
+import { Heart, X } from "lucide-react";
+import Loader from "../common/Loader";
 
 const NewArrival = () => {
   const [activeTab, setActiveTab] = useState("viewAll");

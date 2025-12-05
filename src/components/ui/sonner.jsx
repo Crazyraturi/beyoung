@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Toaster as Sonner } from "sonner";
-import Loader from "../common/Loder";
+import Loader from "../common/Loader";
 
 const Toaster = ({ ...props }) => {
   const { theme = "system" } = useTheme();
@@ -23,7 +23,7 @@ const Toaster = ({ ...props }) => {
         info: <InfoIcon className="size-4" />,
         warning: <TriangleAlertIcon className="size-4" />,
         error: <OctagonXIcon className="size-4" />,
-        loading: <Loader/>,
+        loading: <Loader />,
       }}
       style={{
         "--normal-bg": "var(--popover)",

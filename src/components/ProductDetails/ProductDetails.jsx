@@ -17,7 +17,7 @@ import PDI from "../../assets/PDI.svg";
 import Reward from "../../assets/Reward.jpg";
 import RecentlyViewed from "../Home/RecentlyViewed";
 import FeaturesSection from "../ProductDetails/FeaturesSection";
-import Loader from "../common/Loder";
+import Loader from "../common/Loader";
 
 const StarIcon = (props) => (
   <svg
@@ -279,7 +279,7 @@ export default function ProductPage() {
   if (loading)
     return (
       <div className="h-screen flex justify-center items-center">
-     <Loader />
+        <Loader />
       </div>
     );
 
@@ -685,7 +685,7 @@ export default function ProductPage() {
                       </li>
                       <li>
                         Refunds for prepaid orders go back to original payment.
-                        COD refunds go to  Elegante Wallet.
+                        COD refunds go to Elegante Wallet.
                       </li>
                       <li>
                         Record an unpacking video — required for damage/missing
@@ -721,7 +721,7 @@ export default function ProductPage() {
                     </p>
                     <p className="mb-2">
                       <strong>Manufactured & Sold By:</strong> <br />
-                       Elegante Folks Pvt. Ltd. <br />
+                      Elegante Folks Pvt. Ltd. <br />
                       Eklingpura Chouraha, Ahmedabad Main Road (NH 8 – Near
                       Mahadev Hotel) <br />
                       Udaipur, 313002

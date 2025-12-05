@@ -1,9 +1,6 @@
 import { useState, useContext } from "react";
 import { CartContext } from "../../../src/context/CartContext";
 import { Link } from "react-router-dom";
-import popupImage from "../../assets/popupImage.jpg";
-
-// Standard icon imports
 import {
   Search,
   ShoppingCart,
@@ -24,14 +21,11 @@ import {
   Info,
   HelpCircle,
   RotateCcw,
-  MapPin,
   Gift,
 } from "lucide-react";
-
 import Logo from "../icons/Logo";
 import { useAuth } from "../../../src/context/AuthContext";
 
-// Utility Component: MenuLink (for navigation links to filter pages)
 const MenuLink = ({
   filterKey,
   filterValue,
@@ -403,7 +397,7 @@ export default function EcommerceHeader() {
             {/* Image and Close Button Container */}
             <div className="w-full relative">
               <img
-                src={popupImage}
+                src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764925737/popupImage_lyb36d.jpg"
                 alt="Menu Banner"
                 className="w-full h-auto object-cover"
               />
