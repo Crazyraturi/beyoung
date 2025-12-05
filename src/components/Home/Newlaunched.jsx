@@ -1,11 +1,10 @@
 import React from "react";
-import newlaunchImg from "../../assets/newlyLaunched.png";
 
 const Newlaunched = () => {
   return (
     <div className="max-w-7xl  cursor-pointer m-auto hover:shadow-2xl">
       <img
-        src={newlaunchImg}
+        src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764925853/newlyLaunched_hulquu.png"
         className="object-contain w-full"
         alt="new launch"
       />
