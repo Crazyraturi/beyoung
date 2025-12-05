@@ -12,6 +12,9 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
+import empty_order from "../assets/Empty-cuate.svg"
+import wishlist from "../assets/Online wishes list-cuate.svg"
+import contact_svg from "../assets/brand communication-cuate.svg"
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
 
@@ -59,7 +62,7 @@ const MyAccount = () => {
       condition: "10% off on min shopping of ₹2499",
     },
     {
-      code: " Elegante50",
+      code: " ELEGANTE50",
       description: "Save ₹50 on this order!",
       condition: "₹50 off on orders above ₹999",
     },
@@ -111,7 +114,7 @@ const MyAccount = () => {
   };
 
   const handleLogout = () => {
-    logout(); // 🔑 Call the imported logout function
+    logout(); // 🔑 Call the imported logout functionm
   };
 
   const handleProfileSave = () => {
@@ -132,17 +135,9 @@ const MyAccount = () => {
     switch (activeSection) {
       case "orders":
         return (
-          <div className="bg-white rounded-lg p-8 flex flex-col items-center justify-center min-h-[500px]">
+          <div className="bg-white rounded-lg p-8 flex flex-col items-center justify-center min-h-[570px]">
             <div className="w-64 h-64 mb-6 relative">
-              <svg viewBox="0 0 200 200" className="w-full h-full">
-                <path
-                  d="M50,120 Q50,80 80,80 Q110,80 110,100 Q110,120 130,120 Q150,120 150,140 L150,180 L50,180 Z"
-                  fill="#FFF9E6"
-                  opacity="0.8"
-                />
-                <circle cx="100" cy="60" r="30" fill="#FFF9E6" opacity="0.6" />
-                <circle cx="140" cy="90" r="20" fill="#FFF9E6" opacity="0.5" />
-              </svg>
+              <img src={empty_order} alt="" />
             </div>
             <h2 className="text-2xl font-semibold mb-3">No Order Placed Yet</h2>
             <p className="text-gray-600 text-center mb-6 max-w-md">
@@ -198,48 +193,7 @@ const MyAccount = () => {
           <div className="bg-white rounded-lg p-8">
             <div className="flex flex-col items-center justify-center mb-8">
               <div className="w-48 h-48 mb-6">
-                <svg viewBox="0 0 200 200" className="w-full h-full">
-                  <rect
-                    x="60"
-                    y="40"
-                    width="80"
-                    height="120"
-                    rx="10"
-                    fill="#333"
-                    stroke="#FFD700"
-                    strokeWidth="3"
-                  />
-                  <rect x="65" y="45" width="70" height="80" fill="#FFD700" />
-                  <circle cx="100" cy="150" r="8" fill="#FFD700" />
-                  <path
-                    d="M80,70 L90,85 L120,55"
-                    stroke="#DC143C"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <circle cx="75" cy="95" r="15" fill="#DC143C" />
-                  <path
-                    d="M75,85 C70,90 70,100 75,105 C80,100 80,90 75,85"
-                    fill="#FFF"
-                  />
-                  <path
-                    d="M140,60 Q150,50 160,60 Q170,70 160,80 L140,100 L120,80 Q110,70 120,60 Q130,50 140,60"
-                    fill="#FFD700"
-                  />
-                  <ellipse
-                    cx="35"
-                    cy="180"
-                    rx="20"
-                    ry="8"
-                    fill="#FFD700"
-                    opacity="0.6"
-                  />
-                  <path
-                    d="M165,180 Q170,170 180,175 L185,180 Q180,185 170,183 Z"
-                    fill="#FFD700"
-                    opacity="0.6"
-                  />
-                </svg>
+                <img src={wishlist} alt="wishlist_items" />
               </div>
               <p className="text-gray-700 text-center italic mb-8">
                 "Add your must-have clothes to your favorites and never miss a
@@ -298,7 +252,7 @@ const MyAccount = () => {
                   key={idx}
                   className="border border-gray-300 rounded-lg p-4 flex items-center gap-4">
                   <div className="bg-yellow-400 text-black font-bold px-3 py-8 rounded  transform -rotate-90 origin-center whitespace-nowrap text-sm">
-                     Elegante
+                     ELEGANTE
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-lg mb-1">{coupon.code}</h3>
@@ -329,38 +283,7 @@ const MyAccount = () => {
                 </p>
               </div>
               <div className="w-32 h-32">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  <rect
-                    x="20"
-                    y="30"
-                    width="40"
-                    height="50"
-                    fill="#FFD700"
-                    rx="3"
-                  />
-                  <rect x="22" y="32" width="36" height="20" fill="#FFF" />
-                  <circle cx="40" cy="70" r="3" fill="#333" />
-                  <path
-                    d="M50,20 L55,25 L60,20 L65,30 L70,25"
-                    stroke="#333"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                  <circle
-                    cx="75"
-                    cy="60"
-                    r="15"
-                    fill="#FFF"
-                    stroke="#FFD700"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M75,55 L75,60 L78,63"
-                    stroke="#FFD700"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                </svg>
+               <img src={contact_svg} alt="contact_svg_img" />
               </div>
             </div>
 
