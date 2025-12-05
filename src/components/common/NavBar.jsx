@@ -11,9 +11,6 @@ import {
   Square,
   Circle,
   Star,
-  Footprints,
-  Eye,
-  Tag,
   MoreHorizontal,
   Truck,
   Phone,
@@ -49,7 +46,7 @@ const NavLink = ({ to, children, className = "", onClick }) => (
   </Link>
 );
 
-// Data Definitions (Unchanged)
+// Data Definitions
 const topwearData = [
   {
     title: "T-shirts",
@@ -102,14 +99,6 @@ const bottomwearTypes = [
   "Boxers",
 ];
 
-const combosData = [
-  "4 Plain T-shirts at 1099",
-  "3 Plain Polos at 1399",
-  "3 Cotton Shirts at 1998",
-  "3 Cargo Joggers at 1998",
-  "2 Pyjamas at 1599",
-];
-
 const moreLinks = [
   { name: "Track Order", to: "/track-order", icon: Truck },
   { name: "Contact Us", to: "/contact", icon: Phone },
@@ -122,6 +111,7 @@ const moreLinks = [
     icon: RotateCcw,
   },
 ];
+
 // End Data Definitions
 
 export default function EcommerceHeader() {
@@ -199,12 +189,6 @@ export default function EcommerceHeader() {
         return Square;
       case "Bottomwear":
         return Circle;
-      case "Socks":
-        return Footprints;
-      case "Sunglasses":
-        return Eye;
-      case "Offers & Deals":
-        return Tag;
       case "More":
         return MoreHorizontal;
       default:
@@ -227,15 +211,17 @@ export default function EcommerceHeader() {
 
     if (isLink) {
       return (
-        <MenuLink
-          filterKey={filterKey}
-          filterValue={filterValue}
-          onClick={closeMenu}
-          className="flex items-center w-full px-4 py-3 font-medium text-gray-800 border-b border-gray-100"
-        >
-          {Icon && <Icon className="w-5 h-5 mr-3 text-gray-500" />}
-          {category}
-        </MenuLink>
+        <div className="border-b border-gray-100">
+          <MenuLink
+            filterKey={filterKey}
+            filterValue={filterValue}
+            onClick={closeMenu}
+            className="flex items-center w-full px-4 py-3 font-medium text-gray-800"
+          >
+            {Icon && <Icon className="w-5 h-5 mr-3 text-gray-500" />}
+            {category}
+          </MenuLink>
+        </div>
       );
     }
 
@@ -411,35 +397,13 @@ export default function EcommerceHeader() {
             </div>
 
             <div className="py-4">
-              {/* Combos */}
+              {/* Combos - Direct Link */}
               <MobileMenuItem
                 category="Combos"
                 icon={getCategoryIcon("Combos")}
-                isExpanded={expandedMobileCategory === "Combos"}
-                toggleHandler={toggleMobileCategory}
-              >
-                <div className="px-8 pb-4 space-y-3 bg-gray-50">
-                  {combosData.map((item, index) => (
-                    <MenuLink
-                      key={index}
-                      filterKey="category"
-                      filterValue="Combos"
-                      onClick={closeMenu}
-                      className="block text-sm text-gray-600"
-                    >
-                      {item}
-                    </MenuLink>
-                  ))}
-                  <MenuLink
-                    filterKey="category"
-                    filterValue="Combos"
-                    onClick={closeMenu}
-                    className="block text-sm font-semibold text-gray-800"
-                  >
-                    View All
-                  </MenuLink>
-                </div>
-              </MobileMenuItem>
+                filterKey="category"
+                filterValue="Combos"
+              />
 
               {/* New Arrivals */}
               <MobileMenuItem
@@ -557,31 +521,6 @@ export default function EcommerceHeader() {
                   </ul>
                 </div>
               </MobileMenuItem>
-
-              {/* Socks */}
-              <MobileMenuItem
-                category="Socks"
-                icon={getCategoryIcon("Socks")}
-                filterKey="category"
-                filterValue="Socks"
-              />
-
-              {/* Sunglasses */}
-              <MobileMenuItem
-                category="Sunglasses"
-                icon={getCategoryIcon("Sunglasses")}
-                filterKey="category"
-                filterValue="Sunglasses"
-              />
-
-              {/* Offers & Deals */}
-              <MobileMenuItem
-                category="Offers & Deals"
-                icon={getCategoryIcon("Offers & Deals")}
-                filterKey="category"
-                filterValue="Offers & Deals"
-              />
-
               {/* MORE FIELD - NEW SECTION */}
               <MobileMenuItem
                 category="More"
