@@ -12,6 +12,12 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
+import { useContext } from "react";
+import { WishlistContext } from "@/context/WishlistContext";
+
+import empty_order from "../assets/Empty-cuate.svg";
+import wishlist from "../assets/Online wishes list-cuate.svg";
+import contact_svg from "../assets/brand communication-cuate.svg";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
 
@@ -26,6 +32,8 @@ const MyAccount = () => {
     email: user?.email || "",
     phone: user?.phone || "",
   });
+
+  const { wishlistItems, removeFromWishlist } = useContext(WishlistContext);
 
   useEffect(() => {
     if (user) {
@@ -196,6 +204,7 @@ const MyAccount = () => {
       case "wishlist":
         return (
           <div className="bg-white rounded-lg p-8">
+            <h2 className="text-xl font-semibold mb-6">Your Wishlist</h2>
             <div className="flex flex-col items-center justify-center mb-8">
               <div className="w-48 h-48 mb-6">
                 <img
@@ -209,12 +218,19 @@ const MyAccount = () => {
               </p>
             </div>
 
-            <div>
-              <h3 className="text-sm font-semibold text-gray-600 mb-4">
-                RECENTLY VIEWED
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {recentlyViewed.map((item) => (
+            {wishlistItems.length === 0 ? (
+              <div className="flex flex-col items-center justify-center">
+                <img src={wishlist} className="w-60 h-60 mb-4" />
+                <p className="text-gray-700 italic text-center mb-6">
+                  Your wishlist is empty! Add your favourite fashion items ♥
+                </p>
+                <button className="bg-yellow-400 px-6 py-3 rounded-full font-semibold">
+                  Continue Shopping
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {wishlistItems.map((item) => (
                   <div
                     key={item.id}
                     className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
@@ -222,32 +238,24 @@ const MyAccount = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-48 object-cover bg-gray-200"
+                      className="w-full h-48 object-cover"
                     />
                     <div className="p-3">
-                      <h4 className="font-medium text-sm mb-1 truncate">
-                        {item.name}
-                      </h4>
-                      <p className="text-xs text-gray-500 mb-2">
-                        {item.category}
-                      </p>
-                      <div className="flex items-center gap-2">
+                      <h4 className="font-semibold">{item.name}</h4>
+                      <p className="text-sm text-gray-600">{item.category}</p>
+                      <div className="flex justify-between items-center mt-2">
                         <span className="font-bold">{item.price}</span>
-                        <span className="text-gray-400 line-through text-sm">
-                          {item.oldPrice}
-                        </span>
-                        <span className="text-green-600 text-xs">
-                          ({item.discount})
-                        </span>
+                        <button
+                          onClick={() => removeFromWishlist(item.id)}
+                          className="text-red-500 hover:text-red-700">
+                          <Trash2 size={18} />
+                        </button>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-              <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-full transition-colors">
-                Continue Shopping
-              </button>
-            </div>
+            )}
           </div>
         );
 
