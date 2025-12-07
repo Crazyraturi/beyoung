@@ -24,7 +24,7 @@ import { useEffect } from "react";
 const MyAccount = () => {
   const { logout, user } = useAuth();
   const [activeSection, setActiveSection] = useState("orders");
-  const [isEditingProfile, setIsEditingProfile] = useState(false); // 🔑 State for profile edit mode
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const fullName = (user?.firstName || "") + " " + (user?.lastName || "");
 
   const [userProfile, setUserProfile] = useState({
@@ -145,7 +145,10 @@ const MyAccount = () => {
         return (
           <div className="bg-white rounded-lg p-8 flex flex-col items-center justify-center min-h-[570px]">
             <div className="w-64 h-64 mb-6 relative">
-              <img src={empty_order} alt="" />
+              <img
+                src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764934070/Empty-cuate_ax4cwi.svg"
+                alt=""
+              />
             </div>
             <h2 className="text-2xl font-semibold mb-3">No Order Placed Yet</h2>
             <p className="text-gray-600 text-center mb-6 max-w-md">
@@ -171,7 +174,8 @@ const MyAccount = () => {
             {addresses.map((addr) => (
               <div
                 key={addr.id}
-                className="border border-gray-300 rounded-lg p-4 mb-4">
+                className="border border-gray-300 rounded-lg p-4 mb-4"
+              >
                 <div className="flex justify-between">
                   <div>
                     <h3 className="font-semibold mb-1">{addr.name}</h3>
@@ -186,7 +190,8 @@ const MyAccount = () => {
                     </button>
                     <button
                       onClick={() => handleDeleteAddress(addr.id)}
-                      className="text-gray-500 hover:text-red-600">
+                      className="text-gray-500 hover:text-red-600"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </div>
@@ -200,6 +205,18 @@ const MyAccount = () => {
         return (
           <div className="bg-white rounded-lg p-8">
             <h2 className="text-xl font-semibold mb-6">Your Wishlist</h2>
+            <div className="flex flex-col items-center justify-center mb-8">
+              <div className="w-48 h-48 mb-6">
+                <img
+                  src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764934077/Online_wishes_list-cuate_n0yxrb.svg"
+                  alt="wishlist_items"
+                />
+              </div>
+              <p className="text-gray-700 text-center italic mb-8">
+                "Add your must-have clothes to your favorites and never miss a
+                stylish beat."
+              </p>
+            </div>
 
             {wishlistItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center">
@@ -216,7 +233,8 @@ const MyAccount = () => {
                 {wishlistItems.map((item) => (
                   <div
                     key={item.id}
-                    className="border rounded-lg shadow-sm hover:shadow-lg transition overflow-hidden">
+                    className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                  >
                     <img
                       src={item.image}
                       alt={item.name}
@@ -249,7 +267,8 @@ const MyAccount = () => {
               {coupons.map((coupon, idx) => (
                 <div
                   key={idx}
-                  className="border border-gray-300 rounded-lg p-4 flex items-center gap-4">
+                  className="border border-gray-300 rounded-lg p-4 flex items-center gap-4"
+                >
                   <div className="bg-yellow-400 text-black font-bold px-3 py-8 rounded  transform -rotate-90 origin-center whitespace-nowrap text-sm">
                     ELEGANTE
                   </div>
@@ -282,7 +301,10 @@ const MyAccount = () => {
                 </p>
               </div>
               <div className="w-32 h-32">
-                <img src={contact_svg} alt="contact_svg_img" />
+                <img
+                  src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764934065/brand_communication-cuate_o3pkkf.svg"
+                  alt="contact_svg_img"
+                />
               </div>
             </div>
 
@@ -371,7 +393,8 @@ const MyAccount = () => {
                       ? handleProfileSave()
                       : setIsEditingProfile(true)
                   }
-                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors">
+                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+                >
                   {isEditingProfile ? (
                     <span className="text-sm font-semibold text-blue-600">
                       SAVE
@@ -447,7 +470,8 @@ const MyAccount = () => {
                             ? "text-red-600 hover:bg-red-50"
                             : ""
                         }
-                      `}>
+                      `}
+                    >
                       <Icon size={20} />
                       <span className="flex-1 text-left">{item.label}</span>
                       {/* Hide arrow for Logout button */}
@@ -458,7 +482,8 @@ const MyAccount = () => {
                           }`}
                           fill="none"
                           stroke="currentColor"
-                          viewBox="0 0 24 24">
+                          viewBox="0 0 24 24"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"

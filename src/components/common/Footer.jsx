@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { whyChooseUsData } from "../common/whychoosedata";
-import { popularCategories } from "../common/Populardata";
+import { whyChooseUsData } from "../common/whychoosedata"; // Assuming this exists
+import { popularCategories } from "../common/Populardata"; // Assuming this exists
 import { Instagram, Linkedin, Facebook, Youtube } from "lucide-react";
 import { Bell, X, MoreVertical } from "lucide-react";
 
@@ -14,7 +14,7 @@ const Footer = () => {
   const notifications = [
     {
       id: 1,
-      title: "The  Elegante Fashion For Nation Sale Is LIVE🤩",
+      title: "The Elegante Fashion For Nation Sale Is LIVE🤩",
       subtitle: "Get FLAT 15% OFF your favorites styles😍",
       code: "FREEDOM15",
       buttonText: "Use code: FREEDOM15",
@@ -38,8 +38,9 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#212121] w-full text-white py-15">
-      {/* TOP SECTION — EMAIL SUBSCRIBE */}
+      {/* --- TOP SECTION — EMAIL SUBSCRIBE (Content Omitted for brevity) --- */}
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center text-center md:text-left">
+        {/* ... email subscription content ... */}
         <div>
           <p>
             Exclusive coupons, extra savings, and tons of EVERYDAY deals
@@ -61,7 +62,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* BOTTOM FOOTER SECTIONS */}
+      {/* --- BOTTOM FOOTER SECTIONS (Content Omitted for brevity) --- */}
       <div className="max-w-7xl space-x-4 mx-auto px-8 grid md:grid-cols-4 gap-12 mt-16 text-left">
         {/* SUPPORT */}
         <div>
@@ -90,7 +91,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
         {/* COMPANY */}
         <div>
           <h3 className="mb-3">COMPANY</h3>
@@ -115,7 +115,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
         {/* STORES NEAR ME */}
         <div>
           <h3 className="mb-3">STORES NEAR ME</h3>
@@ -131,7 +130,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
         {/* LOCATION */}
         <div>
           <h3 className="mb-3">LOCATION</h3>
@@ -152,7 +150,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* WHY CHOOSE US */}
+      {/* --- WHY CHOOSE US (Content Omitted for brevity) --- */}
       <div className="max-w-7xl mx-auto px-6 mt-12 mb-12 border-b border-gray-600 pb-6">
         <button
           onClick={() => {
@@ -174,6 +172,7 @@ const Footer = () => {
             openWhy ? "max-h-[5000px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
+          {/* Assuming whyChooseUsData has .full and .short properties */}
           <p className="text-gray-300 mt-4">
             {showFull ? whyChooseUsData.full : whyChooseUsData.short}
           </p>
@@ -186,7 +185,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* POPULAR CATEGORIES */}
+      {/* --- POPULAR CATEGORIES (Content Omitted for brevity) --- */}
       <div className="max-w-7xl mx-auto px-6 mt-12 mb-12 border-b border-gray-600 pb-6">
         <button
           onClick={() => setOpenPopular(!openPopular)}
@@ -205,6 +204,7 @@ const Footer = () => {
             openPopular ? "max-h-[5000px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
+          {/* Assuming popularCategories is an array of objects with title and items */}
           <div className="text-gray-300 leading-7 whitespace-pre-line mt-4">
             {popularCategories.map((section, index) => (
               <div key={index} className="mb-6">
@@ -220,13 +220,12 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* PAYMENT + SOCIAL SECTION (FIXED DIV) */}
-      <div className="max-w-7xl mx-auto">
+      {/* --- PAYMENT + SOCIAL SECTION + COPYRIGHT (Content Omitted for brevity) --- */}
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-6 items-center">
           {/* LEFT PAYMENT SECTION */}
           <div>
             <h3 className="text-lg font-semibold mb-6">100% SECURE PAYMENT</h3>
-
             <div className="flex flex-wrap gap-3 items-center">
               <img
                 src="https://res.cloudinary.com/dj9tpadhk/image/upload/v1764923498/upi_footer_asjgxl.png"
@@ -234,14 +233,14 @@ const Footer = () => {
                 className="w-auto h-auto object-contain"
               />
             </div>
-          </div>{" "}
-          {/* ✅ FIXED — this closing div was missing */}
+          </div>
           {/* RIGHT SOCIAL MEDIA SECTION */}
           <div className="text-center md:text-right">
             <h3 className="text-lg font-semibold mb-6">
               Follow Us To See Our Cooler Side
             </h3>
             <div className="flex gap-4 justify-center md:justify-end flex-wrap">
+              {/* Social Media Icons (Omitted for brevity) */}
               <a
                 href="#"
                 className="bg-white text-gray-900 w-12 h-12 rounded flex items-center justify-center hover:bg-gray-200 transition"
@@ -293,7 +292,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
         {/* COPYRIGHT */}
         <div className="mt-12 pt-8 border-t border-gray-700 text-center">
           <p className="text-sm">
@@ -302,66 +300,82 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* FLOATING BUTTON */}
+      {/* --- FLOATING BUTTON --- */}
       <button
         onClick={() => setOpenBell(!openBell)}
-        className="fixed bottom-6 right-6 bg-yellow-400 text-gray-900 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition"
+        className="fixed bottom-6 right-6 bg-yellow-400 text-gray-900 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50"
       >
         {openBell ? <X className="w-7 h-7" /> : <Bell className="w-7 h-7" />}
       </button>
 
-      {/* ✅ buttton card pop up  */}
-
+      {/* 🔔 FIXED NOTIFICATION POPUP (Mobile & Desktop) */}
       {openBell && (
-        <div className="fixed bottom-24 right-6 w-96 bg-white shadow-xl rounded-lg p-4 z-40 max-h-[80vh] overflow-y-auto">
-          <h2 className="text-xl font-semibold mb-4 flex items-center justify-between">
-            Notifications
-            <Bell className="w-5 h-5 text-gray-600" />
-          </h2>
+        <div
+          className="
+            fixed bottom-24 right-6 
+            w-96 max-w-[90vw] 
+            bg-white shadow-xl rounded-lg z-40 
+            max-h-[80vh] overflow-y-auto 
+            p-0 text-gray-900 
+            sm:w-96
+            
+            /* Mobile-specific adjustments */
+            max-sm:bottom-0 
+            max-sm:right-0 
+            max-sm:w-full 
+            max-sm:max-h-full 
+            max-sm:rounded-b-none
+            max-sm:rounded-t-2xl
+          "
+        >
+          {/* Sticky Header */}
+          <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white z-50">
+            <h1 className="text-gray-800 font-semibold text-lg">
+              Notifications
+            </h1>
+            {/* The Bell icon is redundant here, let's use the X button for closing on mobile */}
+            <button
+              onClick={() => setOpenBell(false)}
+              className="md:hidden text-gray-400 hover:text-gray-600 p-1"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <Bell className="w-5 h-5 text-gray-600 max-md:hidden" />
+          </div>
 
-          {/* Notifications List */}
-          <div className="fixed bottom-24 right-6 w-105 bg-white shadow-xl rounded-lg z-40">
-            {/* Sticky Header */}
-            <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white z-50">
-              <h1 className="text-gray-800 font-semibold">Notifications</h1>
-              <Bell className="w-5 h-5 text-gray-600" />
-            </div>
+          {/* Scrollable List */}
+          <div className="max-h-110 overflow-y-auto p-4">
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="py-3 border-b last:border-b-0"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium text-gray-800">
+                      {notification.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {notification.subtitle}
+                    </p>
 
-            {/* Scrollable List */}
-            <div className="max-h-110 overflow-y-auto p-4">
-              {notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  className="py-3 border-b last:border-b-0"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-medium text-gray-800">
-                        {notification.title}
-                      </h3>
+                    {/* Use a proper Link or button with an actual action */}
+                    <button className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-sm font-medium px-4 py-2 rounded">
+                      {notification.buttonText}
+                    </button>
+                  </div>
 
-                      <p className="text-sm text-gray-600 mt-1">
-                        {notification.subtitle}
-                      </p>
-
-                      <button className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-sm font-medium px-4 py-2 rounded">
-                        {notification.buttonText}
-                      </button>
-                    </div>
-
-                    <div className="flex flex-col items-end ml-4">
-                      <span className="text-xs text-gray-500 mb-2">
-                        {notification.timeAgo}
-                      </span>
-
-                      <button className="text-gray-400 hover:text-gray-600">
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
-                    </div>
+                  <div className="flex flex-col items-end ml-4 min-w-[50px]">
+                    <span className="text-xs text-gray-500 mb-2 whitespace-nowrap">
+                      {notification.timeAgo}
+                    </span>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
