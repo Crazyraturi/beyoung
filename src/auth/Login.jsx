@@ -23,12 +23,6 @@ const Login = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
 
-    if (params.get("verifyEmail") === "sent") {
-      toast.success(
-        "A verification email has been sent. Please check your inbox."
-      );
-    }
-
     if (params.get("verified") === "true") {
       toast.success("Your email has been verified! You can now login.");
     }
