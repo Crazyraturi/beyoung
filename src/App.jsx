@@ -25,6 +25,7 @@ import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Verifyemail from "./auth/VerifyEmail";
 import MyAccount from "./pages/MyAccount";
+import Verify from "./auth/Verify";
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-check" element={<Verify />} />
           <Route path="/verify/:token" element={<Verifyemail />} />
 
           <Route path="/blog" element={<Blog />} />
