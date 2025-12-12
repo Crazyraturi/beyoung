@@ -253,7 +253,7 @@ export default function EcommerceHeader() {
           This website is for internal educational use only and will not be
           publicly published.
         </div>
-        <div className="block sm:hiden text-sm">
+        <div className="block sm:hidden text-sm">
          Education Purpose only
         </div>
         <TopBannerLinks />
